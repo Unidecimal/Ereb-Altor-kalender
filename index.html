@@ -181,9 +181,12 @@
                     </ul>
                 </div>
 
-                <div class="mt-4 pt-3 border-t border-fantasy-700/50 flex items-center justify-between">
+                <div class="mt-4 pt-3 border-t border-fantasy-700/50 flex flex-wrap items-center justify-between gap-2">
                     <button id="reset-checked-btn" class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-rotate-left"></i> Rensa avprickade dagar i år
+                    </button>
+                    <button id="export-import-btn" class="text-xs text-fantasy-gold hover:text-fantasy-goldlight flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-share-nodes"></i> Exportera/Importera Högtider
                     </button>
                 </div>
             </div>
@@ -326,6 +329,34 @@
                     </button>
                     <button id="cancel-year-modal-btn" class="bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 text-xs py-2.5 px-3 rounded-xl border border-fantasy-700 transition">
                         Avbryt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export/Import Modal -->
+    <div id="export-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-fantasy-900 border border-fantasy-gold/50 rounded-3xl max-w-md w-full p-6 shadow-2xl relative text-slate-200">
+            <button id="close-export-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Exportera & Importera Högtider</h3>
+            <p class="text-xs text-slate-400 mb-4">Kopiera koden nedan som innehåller högtider för aktuellt år (<span id="export-year-label">610 e.O.</span>), eller klistra in en exportkod för att importera.</p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-300 font-medium mb-1">Export / Import-kod (JSON):</label>
+                    <textarea id="export-textarea" rows="5" placeholder="Klistra in kod här..." class="w-full bg-fantasy-800 border border-fantasy-600 rounded-xl p-3 text-xs font-mono text-amber-200 focus:outline-none focus:border-fantasy-gold"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="copy-export-btn" class="bg-fantasy-700 hover:bg-fantasy-600 text-fantasy-gold font-bold text-xs py-2.5 px-3 rounded-xl border border-fantasy-600 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-copy"></i> Kopiera Kod
+                    </button>
+                    <button id="import-code-btn" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-bold text-xs py-2.5 px-3 rounded-xl shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-arrow-down"></i> Importera
                     </button>
                 </div>
             </div>
@@ -794,7 +825,6 @@
 
             const customFestivals = getCustomFestivals(currentYearNum, currentEra);
 
-            // Apply festival over specified duration (in days)
             for (let d = 0; d < duration; d++) {
                 const targetAbsDay = currentModalDay.absDayInYear + d;
                 if (targetAbsDay <= 340) {
@@ -811,7 +841,6 @@
             renderCalendar();
         });
 
-        // Delete GM Custom Festival
         document.getElementById('delete-festival-btn').addEventListener('click', () => {
             if (!currentModalDay) return;
             const customFestivals = getCustomFestivals(currentYearNum, currentEra);
@@ -821,6 +850,91 @@
             saveCustomFestivals(currentYearNum, currentEra, customFestivals);
             document.getElementById('day-modal').classList.add('hidden');
             renderCalendar();
+        });
+
+        // Export & Import Handlers
+        const exportModal = document.getElementById('export-modal');
+        const exportTextarea = document.getElementById('export-textarea');
+
+        document.getElementById('export-import-btn').addEventListener('click', () => {
+            document.getElementById('export-year-label').innerText = `alla år`;
+            
+            // Gather all stored festival keys from localStorage for Ereb Altor
+            const allExportData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('ereb_calendar_festivals_')) {
+                    // Extract era and year from key (e.g., ereb_calendar_festivals_e.O._610)
+                    const parts = key.split('_');
+                    const era = parts[3];
+                    const yearNum = parts[4];
+                    const compositeKey = `${yearNum} ${era}`;
+                    
+                    try {
+                        const festivalObj = JSON.parse(localStorage.getItem(key));
+                        if (festivalObj && Object.keys(festivalObj).length > 0) {
+                            allExportData[compositeKey] = festivalObj;
+                        }
+                    } catch (e) {
+                        // skip malformed
+                    }
+                }
+            }
+
+            exportTextarea.value = JSON.stringify(allExportData, null, 2);
+            exportModal.classList.remove('hidden');
+        });
+
+        document.getElementById('close-export-modal-btn').addEventListener('click', () => {
+            exportModal.classList.add('hidden');
+        });
+
+        document.getElementById('copy-export-btn').addEventListener('click', () => {
+            exportTextarea.select();
+            document.execCommand('copy');
+            alert('Koden har kopierats till urklipp!');
+        });
+
+        document.getElementById('import-code-btn').addEventListener('click', () => {
+            try {
+                const parsed = JSON.parse(exportTextarea.value.trim());
+                
+                let importedCount = 0;
+
+                if (typeof parsed === 'object' && parsed !== null) {
+                    // Check if keys are composite like "610 e.O." or "611 e.O."
+                    const keys = Object.keys(parsed);
+                    const isMultiYear = keys.some(k => k.includes('e.O.') || k.includes('f.O.'));
+
+                    if (isMultiYear) {
+                        for (const [compositeKey, festivalsData] of Object.entries(parsed)) {
+                            const parts = compositeKey.trim().split(' ');
+                            if (parts.length >= 2) {
+                                const yearNum = parseInt(parts[0], 10);
+                                const era = parts[1];
+                                if (!isNaN(yearNum) && (era === 'e.O.' || era === 'f.O.')) {
+                                    saveCustomFestivals(yearNum, era, festivalsData);
+                                    importedCount++;
+                                }
+                            }
+                        }
+                    } else if (parsed.festivals && parsed.year !== undefined && parsed.era !== undefined) {
+                        // Single export package format legacy support
+                        saveCustomFestivals(parsed.year, parsed.era, parsed.festivals);
+                        importedCount++;
+                    } else {
+                        // Fallback: assume current active year if raw dictionary
+                        saveCustomFestivals(currentYearNum, currentEra, parsed);
+                        importedCount++;
+                    }
+                }
+
+                renderCalendar();
+                exportModal.classList.add('hidden');
+                alert(`Högtiderna har importerats framgångsrikt (${importedCount} års register uppdaterade)!`);
+            } catch (err) {
+                alert('Ogiltig konfigurationskod. Kontrollera att du klistrat in rätt JSON-data.');
+            }
         });
 
         // Navigation & Filter Listeners
