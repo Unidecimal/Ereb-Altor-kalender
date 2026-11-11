@@ -478,29 +478,45 @@
 
         const cachedEilanaMoons = calculateEilanaFullMoonsUpToDay();
 
-        // Helper to get moon phase info for Tanit (28-day cycle)
-        // Full = day 14, New = day 0/28, Half = day 7 and 21
+        // Helper to get Tanit moon phase (fixed 28-day cycle)
         function getTanitPhase(globalAbsDay) {
-            const mod = (globalAbsDay % 28 + 28) % 28;
+            const mod = ((globalAbsDay % 28) + 28) % 28;
             if (mod === 14) return 'full';
             if (mod === 0) return 'new';
             if (mod === 7 || mod === 21) return 'half';
             return null;
         }
 
-        // Helper to get moon phase info for Eilana based on distance to nearest full moon
+        // Helper to get moon phase info for Eilana based on dynamic step length, rounded to nearest whole day
         function getEilanaPhase(globalAbsDay) {
             if (cachedEilanaMoons.has(globalAbsDay)) return 'full';
-            // Check if it's 7 days away from any full moon (half) or 14 days away (new)
-            // Since Eilana steps are 13, 17, 19, 23, 29 (all odd numbers), 
-            // half phases and new phases are mathematically offset by 7 and 14 days from full moons.
-            for (let offset = -14; offset <= 14; offset++) {
-                if (offset === 0) continue;
-                if (cachedEilanaMoons.has(globalAbsDay + offset)) {
-                    if (Math.abs(offset) === 14) return 'new';
-                    if (Math.abs(offset) === 7) return 'half';
-                }
+
+            // Find previous and next full moon for Eilana
+            let prevFull = globalAbsDay - 1;
+            while (!cachedEilanaMoons.has(prevFull) && prevFull > globalAbsDay - 40) {
+                prevFull--;
             }
+
+            let nextFull = globalAbsDay + 1;
+            while (!cachedEilanaMoons.has(nextFull) && nextFull < globalAbsDay + 40) {
+                nextFull++;
+            }
+
+            if (cachedEilanaMoons.has(prevFull) && cachedEilanaMoons.has(nextFull)) {
+                const cycleLength = nextFull - prevFull;
+                const dayInCycle = globalAbsDay - prevFull;
+
+                // Dynamically calculate relative positions in current variable step, rounded to nearest whole day:
+                // New moon at midpoint (~50%)
+                // Half moons at first quarter (~25%) and third quarter (~75%)
+                const midpoint = Math.round(cycleLength / 2);
+                const firstQuarter = Math.round(cycleLength / 4);
+                const thirdQuarter = Math.round((3 * cycleLength) / 4);
+
+                if (dayInCycle === midpoint) return 'new';
+                if (dayInCycle === firstQuarter || dayInCycle === thirdQuarter) return 'half';
+            }
+
             return null;
         }
 
