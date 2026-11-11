@@ -427,11 +427,33 @@
 
         function toggleDayChecked(absDayInYear) {
             const checkedDays = getCheckedDays(currentYearNum, currentEra);
+            
             if (checkedDays.has(absDayInYear)) {
-                checkedDays.delete(absDayInYear);
+                // If already checked, unmark this day AND all subsequent days in the year up to 340
+                let yearStartDay;
+                if (currentEra === 'e.O.') {
+                    yearStartDay = (currentYearNum - 1) * 340 + 1;
+                } else {
+                    yearStartDay = (-currentYearNum) * 340 + 1;
+                }
+
+                for (let d = absDayInYear; d <= 340; d++) {
+                    checkedDays.delete(d);
+                }
             } else {
-                checkedDays.add(absDayInYear);
+                // If checking a day, also check all preceding unmarked days in the same year (1 up to absDayInYear)
+                let yearStartDay;
+                if (currentEra === 'e.O.') {
+                    yearStartDay = (currentYearNum - 1) * 340 + 1;
+                } else {
+                    yearStartDay = (-currentYearNum) * 340 + 1;
+                }
+
+                for (let d = 1; d <= absDayInYear; d++) {
+                    checkedDays.add(d);
+                }
             }
+
             saveCheckedDays(currentYearNum, currentEra, checkedDays);
             renderCalendar();
         }
