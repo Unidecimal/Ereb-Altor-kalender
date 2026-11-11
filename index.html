@@ -124,7 +124,7 @@
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & Handgester
+                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & Interaktion
                     </h3>
                     <div class="space-y-3 text-xs">
                         <div class="flex items-start gap-3 bg-fantasy-800/60 p-2.5 rounded-xl border border-fantasy-700/50">
@@ -132,7 +132,7 @@
                                 <i class="fa-solid fa-mouse text-sm"></i>
                             </div>
                             <div>
-                                <span class="font-bold text-slate-200 block text-sm">Vänsterklick / Snabbtryck</span>
+                                <span class="font-bold text-slate-200 block text-sm">Vänsterklick</span>
                                 <span class="text-slate-400">Öppna detaljer / Skapa eller ta bort <b>högtidsdag</b> (SL-verktyg).</span>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                                 <i class="fa-solid fa-mouse text-sm rotate-180"></i>
                             </div>
                             <div>
-                                <span class="font-bold text-slate-200 block text-sm">Högerklick / Långtryck</span>
+                                <span class="font-bold text-slate-200 block text-sm">Högerklick</span>
                                 <span class="text-slate-400">Växla <b>avprickning/passerad dag</b>. Markerar upp till eller avmarkerar efterföljande!</span>
                             </div>
                         </div>
@@ -466,7 +466,7 @@
 
         const cachedEilanaMoons = calculateEilanaFullMoonsUpToDay();
 
-        // Build 340-day year structure
+        // Build 340-day year structure (med obruten absolut tideräkning)
         function buildYearStructure(yearNum, era) {
             let yearStartDay;
 
@@ -486,15 +486,19 @@
                 const days = [];
                 for (let d = 1; d <= 28; d++) {
                     const globalAbsDay = yearStartDay + (absDayInYear - 1);
-                    const isTanitFull = (d === 14);
+                    // Tanit fullmåne inträffar exakt var 28:e dag i den absoluta tideräkningen
+                    const isTanitFull = (globalAbsDay % 28 === 14) || (globalAbsDay % 28 === 0 && 28 === 14);
+                    // Bättre kontroll: Tanit infaller alltid när globalAbsDay modulo 28 == 14 (eller motsvarande)
+                    const tanitCheck = (globalAbsDay - 14) % 28 === 0;
+                    
                     const isEilanaFull = cachedEilanaMoons.has(globalAbsDay);
-                    const issyzygie = isTanitFull && isEilanaFull;
+                    const issyzygie = tanitCheck && isEilanaFull;
 
                     days.push({
                         monthDay: d,
                         absDayInYear: absDayInYear,
                         globalAbsDay: globalAbsDay,
-                        isTanitFull: isTanitFull,
+                        isTanitFull: tanitCheck,
                         isEilanaFull: isEilanaFull,
                         issyzygie: issyzygie
                     });
@@ -511,7 +515,9 @@
                 const intercalary = INTERCALARY_DAYS.find(i => i.afterMonth === month.id);
                 if (intercalary) {
                     const globalAbsDay = yearStartDay + (absDayInYear - 1);
+                    const tanitCheck = (globalAbsDay - 14) % 28 === 0;
                     const isEilanaFull = cachedEilanaMoons.has(globalAbsDay);
+                    const issyzygie = tanitCheck && isEilanaFull;
 
                     timeline.push({
                         type: 'intercalary',
@@ -519,9 +525,9 @@
                         day: {
                             absDayInYear: absDayInYear,
                             globalAbsDay: globalAbsDay,
-                            isTanitFull: false,
+                            isTanitFull: tanitCheck,
                             isEilanaFull: isEilanaFull,
-                            issyzygie: false
+                            issyzygie: issyzygie
                         }
                     });
 
