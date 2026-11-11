@@ -33,7 +33,7 @@
                             golddark: '#997a15',
                             tanit: '#38bdf8', // Cyan/blue moon
                             eilana: '#c084fc', // Purple/magenta moon
-                            syzygy: '#f43f5e', // Dual moon highlight
+                            syzygie: '#f43f5e', // Dual moon highlight
                         }
                     }
                 }
@@ -52,7 +52,7 @@
         .eilana-glow {
             box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
         }
-        .syzygy-glow {
+        .syzygie-glow {
             box-shadow: 0 0 15px rgba(244, 63, 94, 0.8), inset 0 0 10px rgba(244, 63, 94, 0.5);
             animation: pulseGlow 2s infinite alternate;
         }
@@ -171,12 +171,12 @@
                             <span><b>Eilana:</b> Följer mystiskt mönster som ter sig slumpmässigt.</span>
                         </li>
                         <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-syzygy inline-block shrink-0 shadow"></span>
-                            <span><b>Stora Syzygy:</b> Båda månarna fulla samtidigt (Sällsynt omen!).</span>
+                            <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 shadow"></span>
+                            <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit ovanför varandra (Sällsynt omen!).</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-amber-600 border border-amber-300 inline-block shrink-0 shadow"></span>
-                            <span><b>Högtider (SL):</b> Gyllengula markerade dagar för festivaler/rituer.</span>
+                            <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/rituer. Kan importeras se knapp nedan, fråga SL.</span>
                         </li>
                     </ul>
                 </div>
@@ -208,9 +208,9 @@
                             <span>Bara Fullmånar (Tanit / Eilana)</span>
                             <i class="fa-solid fa-moon text-fantasy-eilana"></i>
                         </button>
-                        <button data-filter="syzygy" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara Stora Syzygy (Dubbel Fullmåne)</span>
-                            <i class="fa-solid fa-[#f43f5e] text-fantasy-syzygy"></i>
+                        <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
+                            <span>Bara Stora syzygie (Dubbel Fullmåne)</span>
+                            <i class="fa-solid fa-[#f43f5e] text-fantasy-syzygie"></i>
                         </button>
                     </div>
                 </div>
@@ -511,7 +511,7 @@
                     const globalAbsDay = yearStartDay + (absDayInYear - 1);
                     const isTanitFull = (d === 14);
                     const isEilanaFull = eilanaFullMoonSet.has(globalAbsDay);
-                    const isSyzygy = isTanitFull && isEilanaFull;
+                    const issyzygie = isTanitFull && isEilanaFull;
 
                     days.push({
                         monthDay: d,
@@ -519,7 +519,7 @@
                         globalAbsDay: globalAbsDay,
                         isTanitFull: isTanitFull,
                         isEilanaFull: isEilanaFull,
-                        isSyzygy: isSyzygy
+                        issyzygie: issyzygie
                     });
 
                     absDayInYear++;
@@ -545,7 +545,7 @@
                             globalAbsDay: globalAbsDay,
                             isTanitFull: false,
                             isEilanaFull: isEilanaFull,
-                            isSyzygy: false
+                            issyzygie: false
                         }
                     });
 
@@ -632,11 +632,11 @@
                 }
 
                 // Moon Visual Effects
-                if (day.isSyzygy) {
-                    borderStyle = 'border-fantasy-syzygy bg-gradient-to-br from-rose-950/80 to-fantasy-800 syzygy-glow';
-                    moonBadge = '<span class="text-[10px] text-fantasy-syzygy animate-pulse"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-moon"></i></span>';
+                if (day.issyzygie) {
+                    borderStyle = 'border-fantasy-syzygie bg-gradient-to-br from-rose-950/80 to-fantasy-800 syzygie-glow';
+                    moonBadge = '<span class="text-[10px] text-fantasy-syzygie animate-pulse"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-moon"></i></span>';
                 } else if (day.isTanitFull && day.isEilanaFull) {
-                    moonBadge = '<span class="text-[10px] text-fantasy-syzygy"><i class="fa-solid fa-moon"></i></span>';
+                    moonBadge = '<span class="text-[10px] text-fantasy-syzygie"><i class="fa-solid fa-moon"></i></span>';
                 } else if (day.isTanitFull) {
                     borderStyle = borderStyle.includes('amber') ? borderStyle : 'border-fantasy-tanit/60 bg-fantasy-800/80 tanit-glow';
                     moonBadge = '<span class="text-[10px] text-fantasy-tanit" title="Tanit Fullmåne"><i class="fa-solid fa-moon"></i></span>';
@@ -759,8 +759,8 @@
                     } else {
                         node.classList.add('opacity-20');
                     }
-                } else if (activeFilter === 'syzygy') {
-                    if (dayData.isSyzygy) {
+                } else if (activeFilter === 'syzygie') {
+                    if (dayData.issyzygie) {
                         node.classList.remove('opacity-20');
                     } else {
                         node.classList.add('opacity-20');
@@ -769,7 +769,7 @@
             });
 
             intercalaryBlocks.forEach(b => {
-                if (activeFilter === 'syzygy') {
+                if (activeFilter === 'syzygie') {
                     b.classList.add('opacity-20');
                 }
             });
@@ -790,10 +790,10 @@
             const astroContent = document.getElementById('modal-astronomy-content');
             let astroHtml = '';
 
-            if (day.isSyzygy) {
+            if (day.issyzygie) {
                 astroHtml += `
-                    <div class="p-2.5 rounded-xl bg-rose-950/60 border border-fantasy-syzygy text-fantasy-syzygy flex items-center gap-2 font-bold">
-                        <i class="fa-solid fa-star"></i> STORA SYZYGY: Både Tanit och Eilana är fulla i natt! Ett mycket sällsynt omen för alla siare.
+                    <div class="p-2.5 rounded-xl bg-rose-950/60 border border-fantasy-syzygie text-fantasy-syzygie flex items-center gap-2 font-bold">
+                        <i class="fa-solid fa-star"></i> STORA syzygie: Både Tanit och Eilana är fulla i natt! Ett mycket sällsynt omen för alla siare.
                     </div>`;
             } else {
                 if (day.isTanitFull) {
