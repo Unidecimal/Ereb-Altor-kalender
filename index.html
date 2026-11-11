@@ -120,11 +120,11 @@
         <!-- Controls & Legend Top Panel -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- Mouse Controls Helper (NEW) -->
+            <!-- Mouse Controls Helper -->
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyring & Interaktion
+                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & Interaktion
                     </h3>
                     <div class="space-y-3 text-xs">
                         <div class="flex items-start gap-3 bg-fantasy-800/60 p-2.5 rounded-xl border border-fantasy-700/50">
@@ -143,7 +143,7 @@
                             </div>
                             <div>
                                 <span class="font-bold text-slate-200 block text-sm">Högerklick</span>
-                                <span class="text-slate-400">Växla <b>avprickning/passerad dag</b>. Sparas automatiskt lokalt!</span>
+                                <span class="text-slate-400">Växla <b>avprickning/passerad dag</b>. Markerar upp till eller avmarkerar efterföljande!</span>
                             </div>
                         </div>
                     </div>
@@ -159,23 +159,23 @@
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-moon text-fantasy-gold"></i> Månar & Årstider
+                        <i class="fa-solid fa-moon text-fantasy-gold"></i> MÅNAR & ÅRSTIDER
                     </h3>
-                    <ul class="text-xs space-y-2 text-slate-300">
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-tanit inline-block shrink-0 shadow"></span>
+                    <ul class="text-xs space-y-2.5 text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="w-3 h-3 rounded-full bg-fantasy-tanit inline-block shrink-0 mt-0.5 shadow"></span>
                             <span><b>Tanit:</b> Full alltid den 14:e i varje månad (28-dagars cykel).</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-eilana inline-block shrink-0 shadow"></span>
+                        <li class="flex items-start gap-2">
+                            <span class="w-3 h-3 rounded-full bg-fantasy-eilana inline-block shrink-0 mt-0.5 shadow"></span>
                             <span><b>Eilana:</b> Följer mystiskt mönster som ter sig slumpmässigt.</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 shadow"></span>
+                        <li class="flex items-start gap-2">
+                            <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 mt-0.5 shadow"></span>
                             <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit ovanför varandra (Sällsynt omen!).</span>
                         </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-amber-600 border border-amber-300 inline-block shrink-0 shadow"></span>
+                        <li class="flex items-start gap-2">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shrink-0 mt-0.5 shadow"></span>
                             <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/rituer. Kan importeras se knapp nedan, fråga SL.</span>
                         </li>
                     </ul>
@@ -209,8 +209,8 @@
                             <i class="fa-solid fa-moon text-fantasy-eilana"></i>
                         </button>
                         <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara Stora syzygie (Dubbel Fullmåne)</span>
-                            <i class="fa-solid fa-[#f43f5e] text-fantasy-syzygie"></i>
+                            <span>Bara Syzygie (Dubbel Fullmåne)</span>
+                            <i class="fa-solid fa-moon text-fantasy-syzygie"></i>
                         </button>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                     </p>
                 </div>
 
-                <!-- SL GM Custom Festival Marking Section (NEW) -->
+                <!-- SL GM Custom Festival Marking Section -->
                 <div class="bg-amber-950/30 rounded-2xl p-4 border border-amber-500/40">
                     <h4 class="font-heading text-xs uppercase font-bold text-amber-400 tracking-widest mb-2 flex items-center gap-2">
                         <i class="fa-solid fa-crown text-amber-400"></i> Spelledar-verktyg: Lägg till / Ändra Högtid
@@ -274,7 +274,7 @@
                     <div class="space-y-3">
                         <div>
                             <label class="block text-[11px] text-slate-300 font-medium mb-1">Högtidens Namn:</label>
-                            <input type="text" id="festival-name-input" placeholder="t.ex. Vårfesten Akitum, Ymnighetsfesten..." class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
+                            <input type="text" id="festival-name-input" placeholder="t.ex. Vårfesten Akitum..." class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
                         </div>
                         
                         <div class="grid grid-cols-2 gap-3">
@@ -298,7 +298,7 @@
         </div>
     </div>
 
-    <!-- Year Jump Modal (NEW) -->
+    <!-- Year Jump Modal -->
     <div id="year-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-fantasy-900 border border-fantasy-gold/50 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-slate-200">
             <button id="close-year-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
@@ -343,7 +343,7 @@
             </button>
 
             <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Exportera & Importera Högtider</h3>
-            <p class="text-xs text-slate-400 mb-4">Kopiera koden nedan som innehåller högtider för aktuellt år (<span id="export-year-label">610 e.O.</span>), eller klistra in en exportkod för att importera.</p>
+            <p class="text-xs text-slate-400 mb-4">Kopiera koden nedan som innehåller alla sparade högtider för alla år, eller klistra in för att importera.</p>
 
             <div class="space-y-4">
                 <div>
@@ -366,7 +366,6 @@
     <!-- Application Script -->
     <script>
         // Data Definitions based on Ereb Altor Lore
-        const BASE_YEAR_EO = 610;
         let currentYearNum = 610;
         let currentEra = 'e.O.'; // 'e.O.' or 'f.O.'
         let activeFilter = 'all';
@@ -429,26 +428,10 @@
             const checkedDays = getCheckedDays(currentYearNum, currentEra);
             
             if (checkedDays.has(absDayInYear)) {
-                // If already checked, unmark this day AND all subsequent days in the year up to 340
-                let yearStartDay;
-                if (currentEra === 'e.O.') {
-                    yearStartDay = (currentYearNum - 1) * 340 + 1;
-                } else {
-                    yearStartDay = (-currentYearNum) * 340 + 1;
-                }
-
                 for (let d = absDayInYear; d <= 340; d++) {
                     checkedDays.delete(d);
                 }
             } else {
-                // If checking a day, also check all preceding unmarked days in the same year (1 up to absDayInYear)
-                let yearStartDay;
-                if (currentEra === 'e.O.') {
-                    yearStartDay = (currentYearNum - 1) * 340 + 1;
-                } else {
-                    yearStartDay = (-currentYearNum) * 340 + 1;
-                }
-
                 for (let d = 1; d <= absDayInYear; d++) {
                     checkedDays.add(d);
                 }
@@ -463,18 +446,17 @@
             renderCalendar();
         }
 
-        // Calculate Eilana full moon days continuously
-        function calculateEilanaFullMoonsUpToDay(totalDays) {
+        // Calculate Eilana full moon days continuously across timeline
+        function calculateEilanaFullMoonsUpToDay() {
             const eilanaFullMoonDays = new Set();
             let currentDay = 0;
             let stepIndex = 0;
 
-            // Handle both positive and negative absolute day timelines
-            while (currentDay <= Math.abs(totalDays) + 1000) {
+            // Generate forward and backward across a huge epoch window
+            while (currentDay <= 300000) {
                 const step = EILANA_PRIME_STEPS[stepIndex % EILANA_PRIME_STEPS.length];
                 currentDay += step;
                 eilanaFullMoonDays.add(currentDay);
-                // Also support negative (f.O.) absolute day offsets seamlessly
                 eilanaFullMoonDays.add(-currentDay);
                 stepIndex++;
             }
@@ -482,25 +464,20 @@
             return eilanaFullMoonDays;
         }
 
+        const cachedEilanaMoons = calculateEilanaFullMoonsUpToDay();
+
         // Build 340-day year structure
         function buildYearStructure(yearNum, era) {
-            // Calculate absolute timeline index relative to 1 f.O. or e.O.
-            // 1 e.O. is year offset 0 (days 1 to 340). 
-            // 1 f.O. is year offset -1 (days -1 to -340).
-            let linearYearIndex;
             let yearStartDay;
 
             if (era === 'e.O.') {
-                linearYearIndex = yearNum - 1;
+                const linearYearIndex = yearNum - 1;
                 yearStartDay = linearYearIndex * 340 + 1;
             } else {
-                // f.O. years count backwards: 1 f.O. is -340 to -1
-                linearYearIndex = -yearNum;
-                yearStartDay = (linearYearIndex) * 340 + 1;
+                // f.O. years count backwards from 0
+                const linearYearIndex = -yearNum;
+                yearStartDay = linearYearIndex * 340 + 1;
             }
-
-            // Precompute Eilana full moon set across a broad continuous timeline window
-            const eilanaFullMoonSet = calculateEilanaFullMoonsUpToDay(200000);
 
             const timeline = [];
             let absDayInYear = 1;
@@ -510,7 +487,7 @@
                 for (let d = 1; d <= 28; d++) {
                     const globalAbsDay = yearStartDay + (absDayInYear - 1);
                     const isTanitFull = (d === 14);
-                    const isEilanaFull = eilanaFullMoonSet.has(globalAbsDay);
+                    const isEilanaFull = cachedEilanaMoons.has(globalAbsDay);
                     const issyzygie = isTanitFull && isEilanaFull;
 
                     days.push({
@@ -531,11 +508,10 @@
                     days: days
                 });
 
-                // Check for intercalary day after this month
                 const intercalary = INTERCALARY_DAYS.find(i => i.afterMonth === month.id);
                 if (intercalary) {
                     const globalAbsDay = yearStartDay + (absDayInYear - 1);
-                    const isEilanaFull = eilanaFullMoonSet.has(globalAbsDay);
+                    const isEilanaFull = cachedEilanaMoons.has(globalAbsDay);
 
                     timeline.push({
                         type: 'intercalary',
@@ -566,7 +542,6 @@
             const customFestivals = getCustomFestivals(currentYearNum, currentEra);
             const timeline = buildYearStructure(currentYearNum, currentEra);
 
-            // Update Progress Tracker
             const progressPercent = Math.round((checkedDays.size / 340) * 100);
             document.getElementById('year-progress-text').innerText = `${checkedDays.size} / 340 dagar (${progressPercent}%)`;
 
@@ -588,7 +563,6 @@
             const card = document.createElement('div');
             card.className = 'month-block bg-fantasy-900/80 border border-fantasy-600/40 rounded-3xl p-5 shadow-xl transition';
 
-            // Month Header
             const header = document.createElement('div');
             header.className = 'flex flex-col sm:flex-row sm:items-center justify-between border-b border-fantasy-700/50 pb-3 mb-4 gap-2';
             header.innerHTML = `
@@ -607,7 +581,6 @@
             `;
             card.appendChild(header);
 
-            // Days Grid
             const daysGrid = document.createElement('div');
             daysGrid.className = 'grid grid-cols-4 sm:grid-cols-7 gap-2';
 
@@ -621,7 +594,6 @@
                 let moonBadge = '';
                 let festivalBadge = '';
 
-                // Custom Festival Styling (Gyllengul)
                 if (festivalInfo) {
                     borderStyle = 'border-amber-400/80 bg-gradient-to-br from-amber-950/70 via-amber-900/40 to-fantasy-900 festival-glow';
                     textStyle = 'text-amber-200 font-semibold';
@@ -631,7 +603,6 @@
                         </div>`;
                 }
 
-                // Moon Visual Effects
                 if (day.issyzygie) {
                     borderStyle = 'border-fantasy-syzygie bg-gradient-to-br from-rose-950/80 to-fantasy-800 syzygie-glow';
                     moonBadge = '<span class="text-[10px] text-fantasy-syzygie animate-pulse"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-moon"></i></span>';
@@ -645,7 +616,6 @@
                     moonBadge = '<span class="text-[10px] text-fantasy-eilana" title="Eilana Fullmåne"><i class="fa-solid fa-moon"></i></span>';
                 }
 
-                // Checked style overlay
                 if (isChecked) {
                     borderStyle += ' opacity-40 grayscale line-through';
                 }
@@ -667,12 +637,10 @@
                     <div class="text-[9px] text-slate-500 font-mono mt-1 text-right">#${day.absDayInYear}</div>
                 `;
 
-                // Left click -> Open Info & Festival Modal
                 dayNode.addEventListener('click', () => {
-                    openDayModal(day, `${day.monthDay} ${month.name}`, month.lore, false);
+                    openDayModal(day, `${day.monthDay} ${month.name}`, month.lore);
                 });
 
-                // Right click -> Toggle Checked Day
                 dayNode.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
                     toggleDayChecked(day.absDayInYear);
@@ -685,7 +653,7 @@
             return card;
         }
 
-        // Render Intercalary Extra Day (Full Width Banner)
+        // Render Intercalary Extra Day
         function renderIntercalaryCard(intercalary, day, checkedDays) {
             const banner = document.createElement('div');
             const isChecked = checkedDays.has(day.absDayInYear);
@@ -730,7 +698,7 @@
             `;
 
             banner.addEventListener('click', () => {
-                openDayModal(day, intercalary.name, intercalary.lore, true);
+                openDayModal(day, intercalary.name, intercalary.lore);
             });
 
             banner.addEventListener('contextmenu', (e) => {
@@ -741,7 +709,7 @@
             return banner;
         }
 
-        // Apply visibility filters
+        // Apply filters
         function applyFilters() {
             const intercalaryBlocks = document.querySelectorAll('.intercalary-block');
 
@@ -778,7 +746,7 @@
         // Modal Handler & GM Festival Editor
         let currentModalDay = null;
 
-        function openDayModal(day, titleName, loreText, isIntercalary = false) {
+        function openDayModal(day, titleName, loreText) {
             currentModalDay = day;
             
             document.getElementById('modal-title').innerText = titleName;
@@ -786,20 +754,19 @@
             document.getElementById('modal-day-badge').innerText = day.monthDay || '★';
             document.getElementById('modal-lore-text').innerText = loreText;
 
-            // Astronomy Status Content
             const astroContent = document.getElementById('modal-astronomy-content');
             let astroHtml = '';
 
             if (day.issyzygie) {
                 astroHtml += `
                     <div class="p-2.5 rounded-xl bg-rose-950/60 border border-fantasy-syzygie text-fantasy-syzygie flex items-center gap-2 font-bold">
-                        <i class="fa-solid fa-star"></i> STORA syzygie: Både Tanit och Eilana är fulla i natt! Ett mycket sällsynt omen för alla siare.
+                        <i class="fa-solid fa-star"></i> SYZYGIE: Både Tanit och Eilana är fulla i natt! Ett mycket sällsynt omen.
                     </div>`;
             } else {
                 if (day.isTanitFull) {
                     astroHtml += `
                         <div class="p-2 rounded-xl bg-sky-950/50 border border-fantasy-tanit text-fantasy-tanit flex items-center gap-2">
-                            <i class="fa-solid fa-moon"></i> <b>Tanit</b> står helt full på himlen (standardcykel).
+                            <i class="fa-solid fa-moon"></i> <b>Tanit</b> står helt full på himlen.
                         </div>`;
                 }
                 if (day.isEilanaFull) {
@@ -809,13 +776,12 @@
                         </div>`;
                 }
                 if (!day.isTanitFull && !day.isEilanaFull) {
-                    astroHtml += `<div class="text-slate-400 italic">Inga fullmånar denna natt. Månsken i halv- eller nymåne.</div>`;
+                    astroHtml += `<div class="text-slate-400 italic">Inga fullmånar denna natt.</div>`;
                 }
             }
 
             astroContent.innerHTML = astroHtml;
 
-            // Populate GM Festival Editor Form
             const customFestivals = getCustomFestivals(currentYearNum, currentEra);
             const existingFest = customFestivals[day.absDayInYear];
 
@@ -879,14 +845,10 @@
         const exportTextarea = document.getElementById('export-textarea');
 
         document.getElementById('export-import-btn').addEventListener('click', () => {
-            document.getElementById('export-year-label').innerText = `alla år`;
-            
-            // Gather all stored festival keys from localStorage for Ereb Altor
             const allExportData = {};
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key && key.startsWith('ereb_calendar_festivals_')) {
-                    // Extract era and year from key (e.g., ereb_calendar_festivals_e.O._610)
                     const parts = key.split('_');
                     const era = parts[3];
                     const yearNum = parts[4];
@@ -898,7 +860,7 @@
                             allExportData[compositeKey] = festivalObj;
                         }
                     } catch (e) {
-                        // skip malformed
+                        // skip
                     }
                 }
             }
@@ -920,34 +882,19 @@
         document.getElementById('import-code-btn').addEventListener('click', () => {
             try {
                 const parsed = JSON.parse(exportTextarea.value.trim());
-                
                 let importedCount = 0;
 
                 if (typeof parsed === 'object' && parsed !== null) {
-                    // Check if keys are composite like "610 e.O." or "611 e.O."
-                    const keys = Object.keys(parsed);
-                    const isMultiYear = keys.some(k => k.includes('e.O.') || k.includes('f.O.'));
-
-                    if (isMultiYear) {
-                        for (const [compositeKey, festivalsData] of Object.entries(parsed)) {
-                            const parts = compositeKey.trim().split(' ');
-                            if (parts.length >= 2) {
-                                const yearNum = parseInt(parts[0], 10);
-                                const era = parts[1];
-                                if (!isNaN(yearNum) && (era === 'e.O.' || era === 'f.O.')) {
-                                    saveCustomFestivals(yearNum, era, festivalsData);
-                                    importedCount++;
-                                }
+                    for (const [compositeKey, festivalsData] of Object.entries(parsed)) {
+                        const parts = compositeKey.trim().split(' ');
+                        if (parts.length >= 2) {
+                            const yearNum = parseInt(parts[0], 10);
+                            const era = parts[1];
+                            if (!isNaN(yearNum) && (era === 'e.O.' || era === 'f.O.')) {
+                                saveCustomFestivals(yearNum, era, festivalsData);
+                                importedCount++;
                             }
                         }
-                    } else if (parsed.festivals && parsed.year !== undefined && parsed.era !== undefined) {
-                        // Single export package format legacy support
-                        saveCustomFestivals(parsed.year, parsed.era, parsed.festivals);
-                        importedCount++;
-                    } else {
-                        // Fallback: assume current active year if raw dictionary
-                        saveCustomFestivals(currentYearNum, currentEra, parsed);
-                        importedCount++;
                     }
                 }
 
@@ -988,7 +935,6 @@
             renderCalendar();
         });
 
-        // Year Jump Modal triggers
         const yearModal = document.getElementById('year-modal');
         const yearInputField = document.getElementById('year-input-field');
         const eraInputField = document.getElementById('era-input-field');
@@ -1022,7 +968,6 @@
             }
         });
 
-        // Support pressing Enter in input field
         yearInputField.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 document.getElementById('confirm-year-btn').click();
@@ -1053,7 +998,6 @@
             });
         });
 
-        // Initial Load
         window.onload = function() {
             renderCalendar();
         };
