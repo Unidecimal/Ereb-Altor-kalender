@@ -98,14 +98,14 @@
 
             <!-- Global Year Controller -->
             <div class="flex items-center gap-2 sm:gap-3 bg-fantasy-800/80 px-4 py-2 rounded-xl border border-fantasy-600/40 shadow-inner">
-                <button id="prev-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Föregående År">
+                <button id="prev-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Föregående år">
                     <i class="fa-solid fa-chevron-left text-lg"></i>
                 </button>
                 <div class="text-center px-2">
-                    <span class="text-xs text-slate-400 block font-semibold uppercase tracking-widest">Valt År</span>
+                    <span class="text-xs text-slate-400 block font-semibold uppercase tracking-widest">Valt år</span>
                     <span id="current-year-display" class="font-heading font-bold text-lg sm:text-xl text-fantasy-gold">610 e.O.</span>
                 </div>
-                <button id="next-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Nästa År">
+                <button id="next-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Nästa år">
                     <i class="fa-solid fa-chevron-right text-lg"></i>
                 </button>
                 <button id="open-year-modal-btn" class="bg-fantasy-700 hover:bg-fantasy-600 text-fantasy-gold text-xs font-bold py-1.5 px-2.5 rounded-xl border border-fantasy-600 transition" title="Skriv in år">
@@ -124,7 +124,7 @@
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & Handgester
+                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & handgester
                     </h3>
                     <div class="space-y-3 text-xs">
                         <div class="flex items-start gap-3 bg-fantasy-800/60 p-2.5 rounded-xl border border-fantasy-700/50">
@@ -132,7 +132,7 @@
                                 <i class="fa-solid fa-mouse text-sm"></i>
                             </div>
                             <div>
-                                <span class="font-bold text-slate-200 block text-sm">Vänsterklick / Snabbtryck</span>
+                                <span class="font-bold text-slate-200 block text-sm">Vänsterklick / snabbtryck</span>
                                 <span class="text-slate-400">Öppna detaljer / Skapa eller ta bort <b>högtidsdag</b> (SL-verktyg).</span>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                                 <i class="fa-solid fa-mouse text-sm rotate-180"></i>
                             </div>
                             <div>
-                                <span class="font-bold text-slate-200 block text-sm">Högerklick / Långtryck</span>
+                                <span class="font-bold text-slate-200 block text-sm">Högerklick / långtryck</span>
                                 <span class="text-slate-400">Växla <b>avprickning/passerad dag</b>. Markerar upp till eller avmarkerar efterföljande!</span>
                             </div>
                         </div>
@@ -159,7 +159,7 @@
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-moon text-fantasy-gold"></i> MÅNAR & ÅRSTIDER
+                        <i class="fa-solid fa-moon text-fantasy-gold"></i> Månar & årstider
                     </h3>
                     <ul class="text-xs space-y-2.5 text-slate-300">
                         <li class="flex items-start gap-2">
@@ -176,7 +176,7 @@
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shrink-0 mt-0.5 shadow"></span>
-                            <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/rituer. Kan importeras se knapp nedan, fråga SL.</span>
+                            <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler eller ritualer. Kan importeras – se knapp nedan, fråga SL.</span>
                         </li>
                     </ul>
                 </div>
@@ -186,7 +186,7 @@
                         <i class="fa-solid fa-rotate-left"></i> Rensa avprickade dagar i år
                     </button>
                     <button id="export-import-btn" class="text-xs text-fantasy-gold hover:text-fantasy-goldlight flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-share-nodes"></i> Exportera/Importera Högtider
+                        <i class="fa-solid fa-share-nodes"></i> Exportera / Importera högtider
                     </button>
                 </div>
             </div>
@@ -195,21 +195,21 @@
             <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
                 <div>
                     <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-filter text-fantasy-gold"></i> Vyskärm & Filtrering
+                        <i class="fa-solid fa-filter text-fantasy-gold"></i> Visningsläge & filtrering
                     </h3>
                     <p class="text-xs text-slate-400 mb-4">Filtrera vyn för att upptäcka specifika himlafenomen eller fokusera på månaderna.</p>
                     
                     <div class="grid grid-cols-1 gap-2">
                         <button data-filter="all" class="filter-btn active bg-fantasy-gold text-black font-semibold text-xs py-2 px-3 rounded-xl transition flex items-center justify-between">
-                            <span>Visa Alla Dagar</span>
+                            <span>Visa alla dagar</span>
                             <i class="fa-solid fa-calendar-days"></i>
                         </button>
                         <button data-filter="moons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara Fullmånar (Tanit / Eilana)</span>
+                            <span>Bara fullmånar (Tanit / Eilana)</span>
                             <i class="fa-solid fa-moon text-fantasy-eilana"></i>
                         </button>
                         <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara Syzygie (Dubbel Fullmåne)</span>
+                            <span>Bara Syzygie (dubbel fullmåne)</span>
                             <i class="fa-solid fa-moon text-fantasy-syzygie"></i>
                         </button>
                     </div>
@@ -247,7 +247,7 @@
                 <!-- Astronomical / Moon Status -->
                 <div class="bg-fantasy-800/80 rounded-2xl p-4 border border-fantasy-700/60">
                     <h4 class="font-heading text-xs uppercase font-bold text-fantasy-gold tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-moon"></i> Astronomisk Status
+                        <i class="fa-solid fa-moon"></i> Astronomisk status
                     </h4>
                     <div id="modal-astronomy-content" class="space-y-2 text-xs">
                         <!-- Populated dynamically -->
@@ -257,34 +257,34 @@
                 <!-- Lore / Information -->
                 <div class="bg-fantasy-800/80 rounded-2xl p-4 border border-fantasy-700/60">
                     <h4 class="font-heading text-xs uppercase font-bold text-fantasy-gold tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-book-open"></i> Månadens Högtid / Tradition
+                        <i class="fa-solid fa-book-open"></i> Månadens högtid / tradition
                     </h4>
                     <p id="modal-lore-text" class="text-xs text-slate-300 leading-relaxed italic">
-                        Information om tradtioner...
+                        Information om traditioner...
                     </p>
                 </div>
 
                 <!-- SL GM Custom Festival Marking Section -->
                 <div class="bg-amber-950/30 rounded-2xl p-4 border border-amber-500/40">
                     <h4 class="font-heading text-xs uppercase font-bold text-amber-400 tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-crown text-amber-400"></i> Spelledar-verktyg: Lägg till / Ändra Högtid
+                        <i class="fa-solid fa-crown text-amber-400"></i> Spelledarverktyg: Lägg till / Ändra högtid
                     </h4>
                     <p class="text-[11px] text-amber-200/80 mb-3">Markera denna dag som en gyllengul högtidsdag i kalendern.</p>
                     
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[11px] text-slate-300 font-medium mb-1">Högtidens Namn:</label>
+                            <label class="block text-[11px] text-slate-300 font-medium mb-1">Högtidens namn:</label>
                             <input type="text" id="festival-name-input" placeholder="t.ex. Vårfesten Akitum..." class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
                         </div>
                         
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-[11px] text-slate-300 font-medium mb-1">Antal Dagar (Varaktighet):</label>
+                                <label class="block text-[11px] text-slate-300 font-medium mb-1">Antal dagar (varaktighet):</label>
                                 <input type="number" id="festival-duration-input" min="1" max="28" value="1" class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 focus:outline-none focus:border-amber-400">
                             </div>
                             <div class="flex items-end gap-2">
                                 <button id="save-festival-btn" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-bold text-xs py-2 px-3 rounded-xl shadow transition">
-                                    Spara Högtid
+                                    Spara högtid
                                 </button>
                                 <button id="delete-festival-btn" class="bg-rose-900/60 hover:bg-rose-800 text-rose-200 text-xs p-2 rounded-xl border border-rose-700 transition" title="Ta bort högtid från denna dag">
                                     <i class="fa-solid fa-trash"></i>
@@ -342,18 +342,18 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Exportera & Importera Högtider</h3>
+            <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Exportera & Importera högtider</h3>
             <p class="text-xs text-slate-400 mb-4">Kopiera koden nedan som innehåller alla sparade högtider för alla år, eller klistra in för att importera.</p>
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1">Export / Import-kod (JSON):</label>
+                    <label class="block text-xs text-slate-300 font-medium mb-1">Export / import-kod (JSON):</label>
                     <textarea id="export-textarea" rows="5" placeholder="Klistra in kod här..." class="w-full bg-fantasy-800 border border-fantasy-600 rounded-xl p-3 text-xs font-mono text-amber-200 focus:outline-none focus:border-fantasy-gold"></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <button id="copy-export-btn" class="bg-fantasy-700 hover:bg-fantasy-600 text-fantasy-gold font-bold text-xs py-2.5 px-3 rounded-xl border border-fantasy-600 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-copy"></i> Kopiera Kod
+                        <i class="fa-solid fa-copy"></i> Kopiera kod
                     </button>
                     <button id="import-code-btn" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-bold text-xs py-2.5 px-3 rounded-xl shadow transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-file-arrow-down"></i> Importera
