@@ -164,19 +164,19 @@
                     <ul class="text-xs space-y-2 text-slate-300">
                         <li class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-fantasy-tanit inline-block shrink-0 shadow"></span>
-                            <span><b>Tanit:</b> 28-dagars cykel (Full måne 14:e, Nymåne 0, Halvmåne 7 & 21).</span>
+                            <span><b>Tanit:</b> 29-dagars elliptisk bana (fullmåne dag 14–15, halvmåne dag 6–8 & 21–23).</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-fantasy-eilana inline-block shrink-0 shadow"></span>
-                            <span><b>Eilana:</b> Följer primtalssteg med faser (Full, Ny, Halvmåne).</span>
+                            <span><b>Eilana:</b> Följer ett till synes slumpmässigt mönster som de lärde ännu inte räknat ut.</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 shadow"></span>
-                            <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit (Sällsynt omen!).</span>
+                            <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit ovanför varandra (Sällsynt omen!).</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shrink-0 shadow"></span>
-                            <span><b>Högtider:</b> Gyllengula markerade dagar. Kan importeras – se knapp nedan.</span>
+                            <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/ritualer. Kan importeras – se knapp nedan, fråga SL.</span>
                         </li>
                     </ul>
 
@@ -185,11 +185,13 @@
                         <span class="text-[11px] font-heading font-semibold text-fantasy-gold block mb-2">Månfasernas symboler:</span>
                         <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
                             <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-tanit"></i> Fullmåne (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-tanit"></i> Nymåne (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i> Halvmåne (Tanit)</div>
                             <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-eilana"></i> Fullmåne (Eilana)</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-tanit"></i> Nymåne (Tanit)</div>
                             <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-eilana"></i> Nymåne (Eilana)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i> Halvmåne (Eilana)</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i> Tilltagande (Tanit)</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i> Tilltagande (Eilana)</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit"></i> Avtagande (Tanit)</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana"></i> Avtagande (Eilana)</div>
                         </div>
                     </div>
                 </div>
@@ -219,11 +221,24 @@
                         </button>
                         <button data-filter="moons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
                             <span>Bara fullmånar (Tanit / Eilana)</span>
-                            <i class="fa-solid fa-moon text-fantasy-eilana"></i>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle text-fantasy-tanit text-[11px]" title="Fullmåne (Tanit)"></i>
+                                <i class="fa-solid fa-circle text-fantasy-eilana text-[11px]" title="Fullmåne (Eilana)"></i>
+                            </span>
+                        </button>
+                        <button data-filter="newmoons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
+                            <span>Bara nymånar (Tanit / Eilana)</span>
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-regular fa-circle text-fantasy-tanit text-[11px]" title="Nymåne (Tanit)"></i>
+                                <i class="fa-regular fa-circle text-fantasy-eilana text-[11px]" title="Nymåne (Eilana)"></i>
+                            </span>
                         </button>
                         <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
                             <span>Bara Syzygie (dubbel fullmåne)</span>
-                            <i class="fa-solid fa-moon text-fantasy-syzygie"></i>
+                            <span class="flex items-center gap-1 bg-rose-950/80 px-1.5 py-0.5 rounded-full border border-fantasy-syzygie/50">
+                                <i class="fa-solid fa-circle text-fantasy-tanit text-[10px]"></i>
+                                <i class="fa-solid fa-circle text-fantasy-eilana text-[10px]"></i>
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -234,6 +249,15 @@
         <!-- Calendar Months Container -->
         <div id="calendar-container" class="space-y-6">
             <!-- Rendered dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty Filter Message -->
+        <div id="empty-filter-message" class="hidden bg-fantasy-900/80 border border-fantasy-600/40 rounded-3xl p-10 text-center shadow-xl">
+            <div class="w-14 h-14 rounded-2xl bg-fantasy-800 border border-fantasy-600/50 flex items-center justify-center text-fantasy-gold text-2xl mx-auto mb-3">
+                <i class="fa-solid fa-moon"></i>
+            </div>
+            <h3 class="font-heading text-lg font-bold text-fantasy-goldlight mb-1">Inga dagar matchar dina filter</h3>
+            <p class="text-xs text-slate-400">Det inträffar inga matchande månhändelser under valt år. Prova ett annat år eller återställ filtret.</p>
         </div>
 
     </main>
@@ -462,15 +486,26 @@
         // Calculate Eilana full moon days continuously across timeline
         function calculateEilanaFullMoonsUpToDay() {
             const eilanaFullMoonDays = new Set();
-            let currentDay = 0;
-            let stepIndex = 0;
+            let currentDay = 19;
+            eilanaFullMoonDays.add(currentDay);
+            eilanaFullMoonDays.add(-currentDay);
 
-            while (currentDay <= 300000) {
+            let stepIndex = 0;
+            let forwardDay = 19;
+            while (forwardDay <= 300000) {
                 const step = EILANA_PRIME_STEPS[stepIndex % EILANA_PRIME_STEPS.length];
-                currentDay += step;
-                eilanaFullMoonDays.add(currentDay);
-                eilanaFullMoonDays.add(-currentDay);
+                forwardDay += step;
+                eilanaFullMoonDays.add(forwardDay);
                 stepIndex++;
+            }
+
+            let backwardDay = 19;
+            stepIndex = EILANA_PRIME_STEPS.length - 1;
+            while (backwardDay >= -300000) {
+                const step = EILANA_PRIME_STEPS[stepIndex % EILANA_PRIME_STEPS.length];
+                backwardDay -= step;
+                eilanaFullMoonDays.add(backwardDay);
+                stepIndex = (stepIndex - 1 + EILANA_PRIME_STEPS.length) % EILANA_PRIME_STEPS.length;
             }
 
             return eilanaFullMoonDays;
@@ -478,44 +513,75 @@
 
         const cachedEilanaMoons = calculateEilanaFullMoonsUpToDay();
 
-        // Helper to get Tanit moon phase (fixed 28-day cycle)
+        // Precompute elliptical 29-day cycle phases for Tanit
+        // Calculate Eilana full moon dynamically for any day without upper/lower limits
+        // Pattern: 5-step cycle [13, 17, 19, 23, 29] with total sum = 101 days, anchored at Day 19
+        const EILANA_CYCLE_SUM = EILANA_PRIME_STEPS.reduce((a, b) => a + b, 0); // 101
+
+        function getEilanaCycleBounds(globalAbsDay) {
+            const offset = globalAbsDay - 19;
+            const blockIndex = Math.floor(offset / EILANA_CYCLE_SUM);
+            let blockStart = 19 + blockIndex * EILANA_CYCLE_SUM;
+
+            for (let i = 0; i < EILANA_PRIME_STEPS.length; i++) {
+                const step = EILANA_PRIME_STEPS[i];
+                const nextFull = blockStart + step;
+                if (globalAbsDay >= blockStart && globalAbsDay < nextFull) {
+                    return { prevFull: blockStart, nextFull: nextFull };
+                }
+                blockStart = nextFull;
+            }
+            return { prevFull: blockStart, nextFull: blockStart + EILANA_PRIME_STEPS[0] };
+        }
+
+        // Dynamic elliptical 29-day cycle calculation for Tanit (works for any year/era)
         function getTanitPhase(globalAbsDay) {
-            const mod = ((globalAbsDay % 28) + 28) % 28;
-            if (mod === 14) return 'full';
-            if (mod === 0) return 'new';
-            if (mod === 7 || mod === 21) return 'half';
+            const cycleLength = 29;
+            const eccentricity = 0.13; // Controls drift amplitude (~1 day)
+            const precessionPeriod = 110; // Cycles for one full apsidal rotation (~8.8 years)
+
+            const c = Math.floor(globalAbsDay / cycleLength);
+            const cycleStartDay = c * cycleLength;
+            const dayInCycle = globalAbsDay - cycleStartDay;
+
+            // New Moon anchors at start of each 29-day cycle (Day 0 / 29)
+            if (dayInCycle === 0) return 'new';
+
+            const apsidalAngle = (2 * Math.PI * c) / precessionPeriod;
+            const phases = [
+                { name: 'waxing-half', baseDay: 7.25, angle: Math.PI / 2 },
+                { name: 'full',        baseDay: 14.50, angle: Math.PI },
+                { name: 'waning-half', baseDay: 21.75, angle: (3 * Math.PI) / 2 }
+            ];
+
+            for (let i = 0; i < phases.length; i++) {
+                const p = phases[i];
+                const shift = eccentricity * (cycleLength / (2 * Math.PI)) * Math.sin(p.angle + apsidalAngle) * 1.6;
+                const exactDayOffset = Math.round(p.baseDay + shift);
+                if (dayInCycle === exactDayOffset) {
+                    return p.name;
+                }
+            }
+
             return null;
         }
 
         // Helper to get moon phase info for Eilana based on dynamic step length, rounded to nearest whole day
         function getEilanaPhase(globalAbsDay) {
-            if (cachedEilanaMoons.has(globalAbsDay)) return 'full';
+            const { prevFull, nextFull } = getEilanaCycleBounds(globalAbsDay);
 
-            // Find previous and next full moon for Eilana
-            let prevFull = globalAbsDay - 1;
-            while (!cachedEilanaMoons.has(prevFull) && prevFull > globalAbsDay - 40) {
-                prevFull--;
-            }
+            if (globalAbsDay === prevFull) return 'full';
 
-            let nextFull = globalAbsDay + 1;
-            while (!cachedEilanaMoons.has(nextFull) && nextFull < globalAbsDay + 40) {
-                nextFull++;
-            }
+            const cycleLength = nextFull - prevFull;
+            const dayInCycle = globalAbsDay - prevFull;
 
-            if (cachedEilanaMoons.has(prevFull) && cachedEilanaMoons.has(nextFull)) {
-                const cycleLength = nextFull - prevFull;
-                const dayInCycle = globalAbsDay - prevFull;
+            const firstQuarter = Math.round(cycleLength / 4);
+            const midpoint = Math.round(cycleLength / 2);
+            const thirdQuarter = Math.round((3 * cycleLength) / 4);
 
-                // Dynamically calculate relative positions in current variable step, rounded to nearest whole day:
-                // New moon at midpoint (~50%)
-                // Half moons at first quarter (~25%) and third quarter (~75%)
-                const midpoint = Math.round(cycleLength / 2);
-                const firstQuarter = Math.round(cycleLength / 4);
-                const thirdQuarter = Math.round((3 * cycleLength) / 4);
-
-                if (dayInCycle === midpoint) return 'new';
-                if (dayInCycle === firstQuarter || dayInCycle === thirdQuarter) return 'half';
-            }
+            if (dayInCycle === midpoint) return 'new';
+            if (dayInCycle === firstQuarter) return 'waning-half'; // Full -> New (Waning)
+            if (dayInCycle === thirdQuarter) return 'waxing-half'; // New -> Full (Waxing)
 
             return null;
         }
@@ -658,14 +724,15 @@
                         </div>`;
                 }
 
-                // Render Moon Badges for Tanit and Eilana
                 let tanitIcon = '';
                 if (day.tanitPhase === 'full') {
                     tanitIcon = '<i class="fa-solid fa-circle text-fantasy-tanit text-[10px]" title="Tanit Fullmåne"></i>';
                 } else if (day.tanitPhase === 'new') {
                     tanitIcon = '<i class="fa-regular fa-circle text-fantasy-tanit text-[10px]" title="Tanit Nymåne"></i>';
-                } else if (day.tanitPhase === 'half') {
-                    tanitIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit text-[10px]" title="Tanit Halvmåne"></i>';
+                } else if (day.tanitPhase === 'waxing-half') {
+                    tanitIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit text-[10px]" title="Tanit Tilltagande Halvmåne"></i>';
+                } else if (day.tanitPhase === 'waning-half') {
+                    tanitIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit text-[10px]" title="Tanit Avtagande Halvmåne"></i>';
                 }
 
                 let eilanaIcon = '';
@@ -673,8 +740,10 @@
                     eilanaIcon = '<i class="fa-solid fa-circle text-fantasy-eilana text-[10px]" title="Eilana Fullmåne"></i>';
                 } else if (day.eilanaPhase === 'new') {
                     eilanaIcon = '<i class="fa-regular fa-circle text-fantasy-eilana text-[10px]" title="Eilana Nymåne"></i>';
-                } else if (day.eilanaPhase === 'half') {
-                    eilanaIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana text-[10px]" title="Eilana Halvmåne"></i>';
+                } else if (day.eilanaPhase === 'waxing-half') {
+                    eilanaIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana text-[10px]" title="Eilana Tilltagande Halvmåne"></i>';
+                } else if (day.eilanaPhase === 'waning-half') {
+                    eilanaIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana text-[10px]" title="Eilana Avtagande Halvmåne"></i>';
                 }
 
                 if (day.issyzygie) {
@@ -734,14 +803,35 @@
             let bgStyles = 'bg-gradient-to-r from-fantasy-900 via-amber-950/40 to-fantasy-900 border-fantasy-gold/50 text-fantasy-goldlight';
             let moonBadge = '';
 
-            let tanitIcon = day.tanitPhase ? `<i class="fa-solid ${day.tanitPhase === 'full' ? 'fa-circle' : day.tanitPhase === 'new' ? 'fa-regular fa-circle' : 'fa-circle-half-stroke'} text-fantasy-tanit"></i>` : '';
-            let eilanaIcon = day.eilanaPhase ? `<i class="fa-solid ${day.eilanaPhase === 'full' ? 'fa-circle' : day.eilanaPhase === 'new' ? 'fa-regular fa-circle' : 'fa-circle-half-stroke'} text-fantasy-eilana"></i>` : '';
+            let tanitIcon = '';
+            if (day.tanitPhase === 'full') tanitIcon = '<i class="fa-solid fa-circle text-fantasy-tanit"></i>';
+            else if (day.tanitPhase === 'new') tanitIcon = '<i class="fa-regular fa-circle text-fantasy-tanit"></i>';
+            else if (day.tanitPhase === 'waxing-half') tanitIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i>';
+            else if (day.tanitPhase === 'waning-half') tanitIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit"></i>';
 
-            if (day.eilanaPhase === 'full' || day.tanitPhase === 'full') {
+            let eilanaIcon = '';
+            if (day.eilanaPhase === 'full') eilanaIcon = '<i class="fa-solid fa-circle text-fantasy-eilana"></i>';
+            else if (day.eilanaPhase === 'new') eilanaIcon = '<i class="fa-regular fa-circle text-fantasy-eilana"></i>';
+            else if (day.eilanaPhase === 'waxing-half') eilanaIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i>';
+            else if (day.eilanaPhase === 'waning-half') eilanaIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana"></i>';
+
+            if (day.issyzygie) {
+                bgStyles = 'bg-gradient-to-r from-rose-950/70 via-fantasy-800 to-rose-950/70 border-fantasy-syzygie syzygie-glow text-fantasy-syzygie';
+                moonBadge = `
+                    <span class="flex items-center gap-1.5 bg-fantasy-syzygie/20 border border-fantasy-syzygie px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-syzygie animate-pulse">
+                        ${tanitIcon} ${eilanaIcon} Syzygie på högtidsdag!
+                    </span>`;
+            } else if (day.tanitPhase === 'full') {
+                bgStyles = 'bg-gradient-to-r from-sky-950/60 via-fantasy-800 to-sky-950/60 border-fantasy-tanit tanit-glow text-fantasy-tanit';
+                moonBadge = `
+                    <span class="flex items-center gap-1.5 bg-fantasy-tanit/20 border border-fantasy-tanit px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-tanit animate-pulse">
+                        ${tanitIcon} ${eilanaIcon} Fullmåne på högtidsdag!
+                    </span>`;
+            } else if (day.eilanaPhase === 'full') {
                 bgStyles = 'bg-gradient-to-r from-purple-950/60 via-fantasy-800 to-purple-950/60 border-fantasy-eilana eilana-glow text-fantasy-eilana';
                 moonBadge = `
                     <span class="flex items-center gap-1.5 bg-fantasy-eilana/20 border border-fantasy-eilana px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-eilana animate-pulse">
-                        ${tanitIcon} ${eilanaIcon} Månhändelse på högtidsdag!
+                        ${tanitIcon} ${eilanaIcon} Fullmåne på högtidsdag!
                     </span>`;
             } else if (tanitIcon || eilanaIcon) {
                 moonBadge = `<span class="flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-fantasy-800 border border-fantasy-700">${tanitIcon} ${eilanaIcon}</span>`;
@@ -752,6 +842,7 @@
             }
 
             banner.className = `intercalary-block rounded-2xl p-4 border shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer transition hover:scale-[1.005] ${bgStyles}`;
+            banner.dataset.dayJson = JSON.stringify(day);
             
             const checkIcon = isChecked ? '<i class="fa-solid fa-check text-emerald-400"></i> ' : '';
 
@@ -789,36 +880,92 @@
 
         // Apply filters
         function applyFilters() {
+            const monthBlocks = document.querySelectorAll('.month-block');
             const intercalaryBlocks = document.querySelectorAll('.intercalary-block');
+            const emptyMessage = document.getElementById('empty-filter-message');
 
             if (activeFilter === 'all') {
-                document.querySelectorAll('.day-node').forEach(node => node.classList.remove('opacity-20'));
-                intercalaryBlocks.forEach(b => b.classList.remove('opacity-20'));
+                monthBlocks.forEach(mb => mb.classList.remove('hidden'));
+                document.querySelectorAll('.day-node').forEach(node => {
+                    node.classList.remove('opacity-20', 'hidden');
+                });
+                intercalaryBlocks.forEach(b => b.classList.remove('opacity-20', 'hidden'));
+                if (emptyMessage) emptyMessage.classList.add('hidden');
                 return;
             }
 
-            document.querySelectorAll('.day-node').forEach(node => {
-                const dayData = JSON.parse(node.dataset.dayJson);
-                if (activeFilter === 'moons') {
-                    if (dayData.tanitPhase || dayData.eilanaPhase) {
-                        node.classList.remove('opacity-20');
-                    } else {
-                        node.classList.add('opacity-20');
+            let totalVisibleItems = 0;
+
+            // Filter day nodes inside each month and hide empty months
+            monthBlocks.forEach(mb => {
+                const dayNodes = mb.querySelectorAll('.day-node');
+                let visibleDaysInMonth = 0;
+
+                dayNodes.forEach(node => {
+                    const dayData = JSON.parse(node.dataset.dayJson);
+                    let matches = false;
+
+                    if (activeFilter === 'moons') {
+                        matches = (dayData.tanitPhase === 'full' || dayData.eilanaPhase === 'full');
+                    } else if (activeFilter === 'newmoons') {
+                        matches = (dayData.tanitPhase === 'new' || dayData.eilanaPhase === 'new');
+                    } else if (activeFilter === 'syzygie') {
+                        matches = dayData.issyzygie;
                     }
-                } else if (activeFilter === 'syzygie') {
-                    if (dayData.issyzygie) {
-                        node.classList.remove('opacity-20');
+
+                    if (matches) {
+                        node.classList.remove('hidden', 'opacity-20');
+                        visibleDaysInMonth++;
+                        totalVisibleItems++;
                     } else {
-                        node.classList.add('opacity-20');
+                        node.classList.add('hidden');
                     }
+                });
+
+                if (visibleDaysInMonth === 0) {
+                    mb.classList.add('hidden');
+                } else {
+                    mb.classList.remove('hidden');
                 }
             });
 
+            // Filter intercalary standalone days
             intercalaryBlocks.forEach(b => {
-                if (activeFilter === 'syzygie') {
-                    b.classList.add('opacity-20');
+                const dayData = b.dataset.dayJson ? JSON.parse(b.dataset.dayJson) : null;
+                let matches = false;
+
+                if (dayData) {
+                    if (activeFilter === 'moons') {
+                        matches = (dayData.tanitPhase === 'full' || dayData.eilanaPhase === 'full');
+                    } else if (activeFilter === 'newmoons') {
+                        matches = (dayData.tanitPhase === 'new' || dayData.eilanaPhase === 'new');
+                    } else if (activeFilter === 'syzygie') {
+                        matches = dayData.issyzygie;
+                    }
+                } else {
+                    const isSyzygie = b.classList.contains('syzygie-glow');
+                    const isTanitFull = b.classList.contains('tanit-glow');
+                    const isEilanaFull = b.classList.contains('eilana-glow');
+                    if (activeFilter === 'moons') matches = (isSyzygie || isTanitFull || isEilanaFull);
+                    else if (activeFilter === 'syzygie') matches = isSyzygie;
+                }
+
+                if (matches) {
+                    b.classList.remove('hidden', 'opacity-20');
+                    totalVisibleItems++;
+                } else {
+                    b.classList.add('hidden');
                 }
             });
+
+            // Show empty state message if nothing matched
+            if (emptyMessage) {
+                if (totalVisibleItems === 0) {
+                    emptyMessage.classList.remove('hidden');
+                } else {
+                    emptyMessage.classList.add('hidden');
+                }
+            }
         }
 
         // Modal Handler & GM Festival Editor
@@ -842,14 +989,14 @@
                     </div>`;
             } else {
                 if (day.tanitPhase) {
-                    const tanitDesc = day.tanitPhase === 'full' ? 'Fullmåne' : day.tanitPhase === 'new' ? 'Nymåne' : 'Halvmåne';
+                    const tanitDesc = day.tanitPhase === 'full' ? 'Fullmåne' : day.tanitPhase === 'new' ? 'Nymåne' : day.tanitPhase === 'waxing-half' ? 'Tilltagande halvmåne' : 'Avtagande halvmåne';
                     astroHtml += `
                         <div class="p-2 rounded-xl bg-sky-950/50 border border-fantasy-tanit text-fantasy-tanit flex items-center gap-2">
                             <i class="fa-solid fa-moon"></i> <b>Tanit</b> är i fas: ${tanitDesc}.
                         </div>`;
                 }
                 if (day.eilanaPhase) {
-                    const eilanaDesc = day.eilanaPhase === 'full' ? 'Fullmåne' : day.eilanaPhase === 'new' ? 'Nymåne' : 'Halvmåne';
+                    const eilanaDesc = day.eilanaPhase === 'full' ? 'Fullmåne' : day.eilanaPhase === 'new' ? 'Nymåne' : day.eilanaPhase === 'waxing-half' ? 'Tilltagande halvmåne' : 'Avtagande halvmåne';
                     astroHtml += `
                         <div class="p-2 rounded-xl bg-purple-950/50 border border-fantasy-eilana text-fantasy-eilana flex items-center gap-2">
                             <i class="fa-solid fa-moon"></i> <b>Eilana</b> är i fas: ${eilanaDesc}.
