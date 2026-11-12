@@ -6,34 +6,31 @@
     <title>Ereb Altor - Tideräkning & Kalender</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- Google Fonts: Cinzel & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                         heading: ['Cinzel', 'serif'],
-                        body: ['Inter', 'sans-serif'],
                     },
                     colors: {
                         fantasy: {
+                            950: '#06070a',
                             900: '#0c0e14',
-                            800: '#151924',
-                            700: '#1e2436',
-                            600: '#2d3752',
-                            gold: '#d4af37',
-                            goldlight: '#f3e5ab',
-                            golddark: '#997a15',
-                            tanit: '#38bdf8', // Cyan/blue moon
-                            eilana: '#c084fc', // Purple/magenta moon
-                            syzygie: '#f43f5e', // Dual moon highlight
+                            800: '#141824',
+                            700: '#1f2536',
+                            600: '#2e374f',
+                            gold: '#eab308',
+                            goldlight: '#fde047',
+                            tanit: '#38bdf8',
+                            eilana: '#c084fc',
+                            syzygie: '#fb7185'
                         }
                     }
                 }
@@ -44,643 +41,600 @@
         body {
             background-color: #08090d;
             color: #e2e8f0;
-            font-family: 'Inter', sans-serif;
         }
         .tanit-glow {
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
         }
         .eilana-glow {
-            box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.25);
         }
         .syzygie-glow {
-            box-shadow: 0 0 15px rgba(244, 63, 94, 0.8), inset 0 0 10px rgba(244, 63, 94, 0.5);
-            animation: pulseGlow 2s infinite alternate;
+            box-shadow: 0 0 16px rgba(251, 113, 133, 0.45);
         }
         .festival-glow {
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.03); }
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0c0e14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d3752;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #d4af37;
+            box-shadow: 0 0 12px rgba(234, 179, 8, 0.25);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col pb-12 selection:bg-fantasy-gold selection:text-black">
+<body class="font-sans antialiased selection:bg-fantasy-gold selection:text-black">
 
-    <!-- Header Section -->
-    <header class="border-b border-fantasy-600/40 bg-fantasy-900/90 backdrop-blur sticky top-0 z-30 shadow-2xl">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-fantasy-gold to-amber-700 flex items-center justify-center text-black font-black text-2xl shadow-lg border border-fantasy-goldlight/40">
+    <!-- Top Header & Navigation Bar -->
+    <header id="main-header" class="sticky top-0 z-40 bg-[#08090d]/95 backdrop-blur-md border-b border-fantasy-gold/30 shadow-2xl">
+        <!-- Row 1: Brand & Year Selector -->
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Left: Golden 'E' Badge + Title & Subtitle -->
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-b from-amber-400 via-fantasy-gold to-amber-700 border border-amber-300/60 flex items-center justify-center text-fantasy-950 font-sans font-extrabold text-2xl shadow-lg shrink-0">
                     E
                 </div>
                 <div>
-                    <h1 class="font-heading text-2xl md:text-3xl font-bold tracking-wider text-fantasy-goldlight flex items-center gap-2">
+                    <h1 class="font-heading text-2xl md:text-3xl font-extrabold tracking-wider text-fantasy-goldlight leading-none">
                         EREB ALTOR
                     </h1>
-                    <p class="text-xs text-slate-400 font-medium">Jorisk Tideräkning • 340 Dagar • 12 Månader • 4 Högtidsdagar</p>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1.5 font-medium">
+                        Jorisk Tideräkning • 340 Dagar • 12 Månader • 4 Högtidsdagar
+                    </p>
                 </div>
             </div>
 
-            <!-- Global Year Controller -->
-            <div class="flex items-center gap-2 sm:gap-3 bg-fantasy-800/80 px-4 py-2 rounded-xl border border-fantasy-600/40 shadow-inner">
-                <button id="prev-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Föregående år">
-                    <i class="fa-solid fa-chevron-left text-lg"></i>
+            <!-- Right: VALT ÅR Pill Box -->
+            <div class="relative flex items-center gap-3 sm:gap-5 bg-fantasy-900/95 px-4 py-2 rounded-2xl border border-fantasy-700/80 shadow-xl">
+                <button id="prev-year-btn" title="Föregående år" class="p-2 rounded-xl hover:bg-fantasy-800 text-slate-300 hover:text-fantasy-gold transition">
+                    <i class="fa-solid fa-chevron-left text-base"></i>
                 </button>
-                <div class="text-center px-2">
-                    <span class="text-xs text-slate-400 block font-semibold uppercase tracking-widest">Valt år</span>
-                    <span id="current-year-display" class="font-heading font-bold text-lg sm:text-xl text-fantasy-gold">610 e.O.</span>
+
+                <div class="text-center min-w-[105px]">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight">VALT ÅR</div>
+                    <div id="selected-year-display" class="font-heading font-extrabold text-lg sm:text-xl text-fantasy-gold tracking-wide mt-0.5">
+                        610 E.O.
+                    </div>
                 </div>
-                <button id="next-year-btn" class="text-slate-300 hover:text-fantasy-gold p-2 transition hover:bg-fantasy-700 rounded-lg" title="Nästa år">
-                    <i class="fa-solid fa-chevron-right text-lg"></i>
+
+                <button id="next-year-btn" title="Nästa år" class="p-2 rounded-xl hover:bg-fantasy-800 text-slate-300 hover:text-fantasy-gold transition">
+                    <i class="fa-solid fa-chevron-right text-base"></i>
                 </button>
-                <button id="open-year-modal-btn" class="bg-fantasy-700 hover:bg-fantasy-600 text-fantasy-gold text-xs font-bold py-1.5 px-2.5 rounded-xl border border-fantasy-600 transition" title="Skriv in år">
-                    <i class="fa-solid fa-pen"></i> Hoppa till år
+
+                <button id="jump-year-btn" type="button" class="px-3.5 py-2 rounded-xl bg-fantasy-800 hover:bg-fantasy-700 text-fantasy-gold text-xs font-bold border border-fantasy-600/80 shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen text-[11px]"></i>
+                    <span>Hoppa till år</span>
+                </button>
+
+                <!-- Jump to Year Popover -->
+                <div id="jump-year-popover" class="hidden absolute right-0 top-full mt-2 w-72 bg-fantasy-900 border border-fantasy-gold/60 rounded-2xl p-4 shadow-2xl z-50">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-heading font-bold text-fantasy-goldlight">Välj år och tideräkning</span>
+                        <button id="close-jump-popover" type="button" class="text-slate-400 hover:text-white text-xs">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <input type="number" id="year-input" value="610" min="1" max="9999" 
+                               class="w-full bg-fantasy-950 border border-fantasy-600 rounded-xl px-3 py-1.5 text-center font-heading font-bold text-fantasy-goldlight focus:outline-none focus:border-fantasy-gold">
+                        <div class="flex bg-fantasy-950 rounded-xl p-1 border border-fantasy-700 shrink-0">
+                            <button id="era-fo-btn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white">
+                                f.O.
+                            </button>
+                            <button id="era-eo-btn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition bg-fantasy-gold text-black shadow">
+                                e.O.
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                        <button id="reset-610-btn" type="button" class="px-3 py-1.5 rounded-xl bg-fantasy-800 hover:bg-fantasy-700 text-xs font-medium text-slate-200 transition">
+                            610 e.O.
+                        </button>
+                        <button id="apply-jump-year-btn" type="button" class="px-4 py-1.5 rounded-xl bg-fantasy-gold hover:bg-fantasy-goldlight text-black text-xs font-bold shadow transition">
+                            Gå till år
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Panel Toggle Switches (Info, Filtrering, Musstyrning) -->
+        <div class="border-t border-fantasy-700/50 bg-fantasy-900/90">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                <!-- Info Panel Toggle -->
+                <button id="toggle-info-btn" type="button" aria-pressed="false" class="flex items-center gap-2 bg-gradient-to-r from-fantasy-900 via-fantasy-800 to-fantasy-900 border border-slate-700 px-3 py-1.5 rounded-xl shadow-lg hover:border-fantasy-gold transition cursor-pointer select-none">
+                    <span id="toggle-info-label" class="text-xs font-heading font-bold text-slate-400 tracking-wide">Teckenförklaring</span>
+                    <span id="toggle-info-track" class="w-10 h-5 rounded-full bg-slate-700 border border-slate-600 p-0.5 flex items-center transition-colors duration-300 shadow-inner">
+                        <span id="toggle-info-thumb" class="w-3.5 h-3.5 rounded-full bg-fantasy-900 shadow-md transform translate-x-0 transition-transform duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-fantasy-goldlight"></span>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- Filter Panel Toggle -->
+                <button id="toggle-filter-btn" type="button" aria-pressed="false" class="flex items-center gap-2 bg-gradient-to-r from-fantasy-900 via-fantasy-800 to-fantasy-900 border border-slate-700 px-3 py-1.5 rounded-xl shadow-lg hover:border-fantasy-gold transition cursor-pointer select-none">
+                    <span id="toggle-filter-label" class="text-xs font-heading font-bold text-slate-400 tracking-wide">Filtrering</span>
+                    <span id="toggle-filter-track" class="w-10 h-5 rounded-full bg-slate-700 border border-slate-600 p-0.5 flex items-center transition-colors duration-300 shadow-inner">
+                        <span id="toggle-filter-thumb" class="w-3.5 h-3.5 rounded-full bg-fantasy-900 shadow-md transform translate-x-0 transition-transform duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-fantasy-goldlight"></span>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- Mouse Gestures Toggle -->
+                <button id="toggle-mouse-btn" type="button" aria-pressed="false" class="flex items-center gap-2 bg-gradient-to-r from-fantasy-900 via-fantasy-800 to-fantasy-900 border border-slate-700 px-3 py-1.5 rounded-xl shadow-lg hover:border-fantasy-gold transition cursor-pointer select-none">
+                    <span id="toggle-mouse-label" class="text-xs font-heading font-bold text-slate-400 tracking-wide">Kontroller</span>
+                    <span id="toggle-mouse-track" class="w-10 h-5 rounded-full bg-slate-700 border border-slate-600 p-0.5 flex items-center transition-colors duration-300 shadow-inner">
+                        <span id="toggle-mouse-thumb" class="w-3.5 h-3.5 rounded-full bg-fantasy-900 shadow-md transform translate-x-0 transition-transform duration-300 flex items-center justify-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-fantasy-goldlight"></span>
+                        </span>
+                    </span>
                 </button>
             </div>
         </div>
-    </header>
 
-    <main class="max-w-7xl mx-auto px-4 mt-6 flex-grow w-full space-y-6">
-
-        <!-- Controls & Legend Top Panel -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Mouse Controls Helper -->
-            <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-                <div>
-                    <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & handgester
-                    </h3>
-                    <div class="space-y-3 text-xs">
-                        <div class="flex items-start gap-3 bg-fantasy-800/60 p-2.5 rounded-xl border border-fantasy-700/50">
-                            <div class="w-8 h-8 rounded-lg bg-fantasy-700 flex items-center justify-center text-fantasy-gold shrink-0 font-bold border border-fantasy-600">
-                                <i class="fa-solid fa-mouse text-sm"></i>
-                            </div>
-                            <div>
-                                <span class="font-bold text-slate-200 block text-sm">Vänsterklick / snabbtryck</span>
-                                <span class="text-slate-400">Öppna detaljer / Skapa eller ta bort <b>högtidsdag</b> (SL-verktyg).</span>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-3 bg-fantasy-800/60 p-2.5 rounded-xl border border-fantasy-700/50">
-                            <div class="w-8 h-8 rounded-lg bg-fantasy-700 flex items-center justify-center text-emerald-400 shrink-0 font-bold border border-fantasy-600">
-                                <i class="fa-solid fa-mouse text-sm rotate-180"></i>
-                            </div>
-                            <div>
-                                <span class="font-bold text-slate-200 block text-sm">Högerklick / långtryck</span>
-                                <span class="text-slate-400">Växla <b>avprickning/passerad dag</b>. Markerar upp till eller avmarkerar efterföljande!</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-3 border-t border-fantasy-700/50 flex items-center justify-between text-xs text-slate-400">
+        <!-- Row 3: Year Progress Counter & Action Buttons -->
+        <div class="border-t border-fantasy-700/50 bg-fantasy-800/80">
+            <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center justify-between gap-3">
+                <div class="text-xs text-slate-300 flex items-center gap-2">
                     <span>Framsteg i år:</span>
-                    <span id="year-progress-text" class="font-mono text-fantasy-gold font-bold">0 / 340 dagar (0%)</span>
+                    <span id="year-progress-text" class="font-mono font-bold text-fantasy-gold">0 / 340 dagar (0%)</span>
                 </div>
-            </div>
-
-            <!-- Moons & Seasons Information -->
-            <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-                <div>
-                    <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-moon text-fantasy-gold"></i> Månar & årstider
-                    </h3>
-                    <ul class="text-xs space-y-2 text-slate-300">
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-tanit inline-block shrink-0 shadow"></span>
-                            <span><b>Tanit:</b> 29-dagars elliptisk bana (fullmåne dag 14–15, halvmåne dag 6–8 & 21–23).</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-eilana inline-block shrink-0 shadow"></span>
-                            <span><b>Eilana:</b> Följer ett till synes slumpmässigt mönster som de lärde ännu inte räknat ut.</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 shadow"></span>
-                            <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit ovanför varandra (Sällsynt omen!).</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shrink-0 shadow"></span>
-                            <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/ritualer. Kan importeras – se knapp nedan, fråga SL.</span>
-                        </li>
-                    </ul>
-
-                    <!-- Symbol Explanation / Legend -->
-                    <div class="mt-4 pt-3 border-t border-fantasy-700/50">
-                        <span class="text-[11px] font-heading font-semibold text-fantasy-gold block mb-2">Månfasernas symboler:</span>
-                        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-tanit"></i> Fullmåne (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-eilana"></i> Fullmåne (Eilana)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-tanit"></i> Nymåne (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-eilana"></i> Nymåne (Eilana)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i> Tilltagande (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i> Tilltagande (Eilana)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit"></i> Avtagande (Tanit)</div>
-                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana"></i> Avtagande (Eilana)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-3 border-t border-fantasy-700/50 flex flex-wrap items-center justify-between gap-2">
-                    <button id="reset-checked-btn" class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 transition">
+                <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+                    <button id="reset-checked-btn" class="text-[11px] text-rose-400 hover:text-rose-300 flex items-center gap-1.5 transition font-medium">
                         <i class="fa-solid fa-rotate-left"></i> Rensa avprickade dagar i år
                     </button>
-                    <button id="export-import-btn" class="text-xs text-fantasy-gold hover:text-fantasy-goldlight flex items-center gap-1.5 transition">
+                    <button id="export-import-btn" class="text-[11px] text-fantasy-gold hover:text-fantasy-goldlight flex items-center gap-1.5 transition font-medium">
                         <i class="fa-solid fa-share-nodes"></i> Exportera / Importera högtider
                     </button>
                 </div>
             </div>
+        </div>
 
-            <!-- Filter Controls -->
-            <div class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-                <div>
-                    <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3">
-                        <i class="fa-solid fa-filter text-fantasy-gold"></i> Visningsläge & filtrering
-                    </h3>
-                    <p class="text-xs text-slate-400 mb-4">Filtrera vyn för att upptäcka specifika himlafenomen eller fokusera på månaderna.</p>
+        <!-- Row 4: Collapsible Info, Filter & Mouse Cards -->
+        <div id="sticky-info-wrapper" class="border-t border-fantasy-700/50 bg-[#08090d]/95 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 py-3.5 max-h-[55vh] overflow-y-auto">
+                <div id="info-cards-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     
-                    <div class="grid grid-cols-1 gap-2">
-                        <button data-filter="all" class="filter-btn active bg-fantasy-gold text-black font-semibold text-xs py-2 px-3 rounded-xl transition flex items-center justify-between">
-                            <span>Visa alla dagar</span>
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </button>
-                        <button data-filter="moons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara fullmånar (Tanit / Eilana)</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle text-fantasy-tanit text-[11px]" title="Fullmåne (Tanit)"></i>
-                                <i class="fa-solid fa-circle text-fantasy-eilana text-[11px]" title="Fullmåne (Eilana)"></i>
-                            </span>
-                        </button>
-                        <button data-filter="newmoons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara nymånar (Tanit / Eilana)</span>
-                            <span class="flex items-center gap-1.5">
-                                <i class="fa-regular fa-circle text-fantasy-tanit text-[11px]" title="Nymåne (Tanit)"></i>
-                                <i class="fa-regular fa-circle text-fantasy-eilana text-[11px]" title="Nymåne (Eilana)"></i>
-                            </span>
-                        </button>
-                        <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
-                            <span>Bara Syzygie (dubbel fullmåne)</span>
-                            <span class="flex items-center gap-1 bg-rose-950/80 px-1.5 py-0.5 rounded-full border border-fantasy-syzygie/50">
-                                <i class="fa-solid fa-circle text-fantasy-tanit text-[10px]"></i>
-                                <i class="fa-solid fa-circle text-fantasy-eilana text-[10px]"></i>
-                            </span>
-                        </button>
+                    <!-- Mouse Controls Helper -->
+                    <div id="mouse-panel-card" class="bg-fantasy-900/80 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-4">
+                                <i class="fa-solid fa-computer-mouse text-fantasy-gold"></i> Musstyrning & handgester
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="bg-fantasy-800/60 border border-fantasy-700/50 rounded-2xl p-3 flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-xl bg-fantasy-700/80 border border-fantasy-600 text-fantasy-gold flex items-center justify-center shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-computer-mouse text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-heading font-bold text-xs text-fantasy-goldlight block mb-0.5">Vänsterklick / snabbtryck</span>
+                                        <p class="text-xs text-slate-300 leading-relaxed">Öppna detaljer / Skapa eller ta bort högtidsdag (SL-verktyg).</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-fantasy-800/60 border border-fantasy-700/50 rounded-2xl p-3 flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-xl bg-fantasy-700/80 border border-fantasy-600 text-fantasy-tanit flex items-center justify-center shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-hand-pointer text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-heading font-bold text-xs text-fantasy-goldlight block mb-0.5">Högerklick / långtryck</span>
+                                        <p class="text-xs text-slate-300 leading-relaxed">Växla avprickning/passerad dag. Markerar upp till eller avmarkerar efterföljande!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-fantasy-700/50 text-[11px] text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-fantasy-gold"></i>
+                            <span>Rulla längst ner eller längst upp för att ladda nästa eller föregående år automatiskt.</span>
+                        </div>
                     </div>
+
+                    <!-- Moons & Seasons Information -->
+                    <div id="info-panel-card" class="bg-fantasy-900/90 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-3 text-sm">
+                                <i class="fa-solid fa-moon text-fantasy-gold"></i> Månar & årstider
+                            </h3>
+                            <ul class="text-xs space-y-2 text-slate-300">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-fantasy-tanit inline-block shrink-0 shadow"></span>
+                                    <span><b>Tanit:</b> 29-dagars elliptisk bana (fullmåne dag 14–15, halvmåne dag 6–8 & 21–23).</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-fantasy-eilana inline-block shrink-0 shadow"></span>
+                                    <span><b>Eilana:</b> Följer ett till synes slumpmässigt mönster som de lärde ännu inte räknat ut.</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-fantasy-syzygie inline-block shrink-0 shadow"></span>
+                                    <span><b>Syzygie:</b> Båda månarna fulla samtidigt och står i zenit ovanför varandra (Sällsynt omen!).</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shrink-0 shadow"></span>
+                                    <span><b>Högtider:</b> Gyllengula markerade dagar för festivaler/ritualer. Kan importeras – se knapp ovan, fråga SL.</span>
+                                </li>
+                            </ul>
+
+                            <!-- Symbol Explanation / Legend -->
+                            <div class="mt-4 pt-3 border-t border-fantasy-700/50">
+                                <span class="text-[11px] font-heading font-semibold text-fantasy-gold block mb-2">Månfasernas symboler:</span>
+                                <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-tanit"></i> Fullmåne (Tanit)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-fantasy-eilana"></i> Fullmåne (Eilana)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-tanit"></i> Nymåne (Tanit)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-regular fa-circle text-fantasy-eilana"></i> Nymåne (Eilana)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i> Tilltagande (Tanit)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i> Tilltagande (Eilana)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit"></i> Avtagande (Tanit)</div>
+                                    <div class="flex items-center gap-1.5"><i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana"></i> Avtagande (Eilana)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Controls -->
+                    <div id="filter-panel-card" class="bg-fantasy-900/90 border border-fantasy-600/40 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading font-semibold text-fantasy-gold flex items-center gap-2 mb-2 text-sm">
+                                <i class="fa-solid fa-filter text-fantasy-gold"></i> Visningsläge & filtrering
+                            </h3>
+                            <p class="text-[11px] text-slate-400 mb-3">Filtrera vyn för att upptäcka specifika himlafenomen eller fokusera på månaderna.</p>
+                            
+                            <div class="grid grid-cols-1 gap-2">
+                                <button data-filter="all" class="filter-btn active bg-fantasy-gold text-black font-semibold text-xs py-2 px-3 rounded-xl transition flex items-center justify-between">
+                                    <span>Visa alla dagar</span>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </button>
+                                <button data-filter="moons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
+                                    <span>Bara fullmånar (Tanit / Eilana)</span>
+                                    <span class="flex items-center gap-1.5">
+                                        <i class="fa-solid fa-circle text-fantasy-tanit text-[11px]" title="Fullmåne (Tanit)"></i>
+                                        <i class="fa-solid fa-circle text-fantasy-eilana text-[11px]" title="Fullmåne (Eilana)"></i>
+                                    </span>
+                                </button>
+                                <button data-filter="newmoons" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
+                                    <span>Bara nymånar (Tanit / Eilana)</span>
+                                    <span class="flex items-center gap-1.5">
+                                        <i class="fa-regular fa-circle text-fantasy-tanit text-[11px]" title="Nymåne (Tanit)"></i>
+                                        <i class="fa-regular fa-circle text-fantasy-eilana text-[11px]" title="Nymåne (Eilana)"></i>
+                                    </span>
+                                </button>
+                                <button data-filter="syzygie" class="filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between">
+                                    <span>Bara Syzygie (dubbel fullmåne)</span>
+                                    <span class="flex items-center gap-1 bg-rose-950/80 px-1.5 py-0.5 rounded-full border border-fantasy-syzygie/50">
+                                        <i class="fa-solid fa-circle text-fantasy-tanit text-[10px]"></i>
+                                        <i class="fa-solid fa-circle text-fantasy-eilana text-[10px]"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </div>
+    </header>
 
-        <!-- Calendar Months Container -->
-        <div id="calendar-container" class="space-y-6">
-            <!-- Rendered dynamically via JavaScript -->
+    <!-- Main Calendar Stream -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div id="calendar-stream" class="space-y-10"></div>
+
+        <div id="empty-filter-message" class="hidden text-center py-16 bg-fantasy-900/60 border border-fantasy-700/50 rounded-3xl">
+            <i class="fa-solid fa-moon text-4xl text-fantasy-gold/50 mb-3"></i>
+            <h3 class="font-heading text-lg font-bold text-slate-200">Inga dagar matchar filtret</h3>
+            <p class="text-xs text-slate-400 mt-1">Prova att välja ett annat visningsläge eller ladda fler år genom att rulla snabbt upp en bit sedan mer nedåt.</p>
         </div>
-
-        <!-- Empty Filter Message -->
-        <div id="empty-filter-message" class="hidden bg-fantasy-900/80 border border-fantasy-600/40 rounded-3xl p-10 text-center shadow-xl">
-            <div class="w-14 h-14 rounded-2xl bg-fantasy-800 border border-fantasy-600/50 flex items-center justify-center text-fantasy-gold text-2xl mx-auto mb-3">
-                <i class="fa-solid fa-moon"></i>
-            </div>
-            <h3 class="font-heading text-lg font-bold text-fantasy-goldlight mb-1">Inga dagar matchar dina filter</h3>
-            <p class="text-xs text-slate-400">Det inträffar inga matchande månhändelser under valt år. Prova ett annat år eller återställ filtret.</p>
-        </div>
-
     </main>
 
-    <!-- Day Info & Festival Modal -->
-    <div id="day-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-fantasy-900 border border-fantasy-gold/50 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative text-slate-200">
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-xmark"></i>
+    <!-- Day Details & SL Festival Modal -->
+    <div id="day-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-fantasy-900 border border-fantasy-gold/60 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button id="close-modal-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
+            <h3 id="modal-title" class="font-heading text-2xl font-bold text-fantasy-goldlight">Dagdetaljer</h3>
+            <p id="modal-subtitle" class="text-xs text-slate-400 mt-0.5 mb-4">Dag #1</p>
 
-            <div class="flex items-center gap-3 mb-4">
-                <div id="modal-day-badge" class="w-12 h-12 rounded-2xl bg-fantasy-gold/20 border border-fantasy-gold flex items-center justify-center text-fantasy-gold text-xl font-bold font-heading">
-                    14
-                </div>
-                <div>
-                    <h2 id="modal-title" class="font-heading text-2xl font-bold text-fantasy-goldlight">14 Persil</h2>
-                    <p id="modal-subtitle" class="text-xs text-slate-400 font-mono">Dag #14 på året 610 e.O.</p>
-                </div>
+            <div class="bg-fantasy-800/70 border border-fantasy-700/60 rounded-2xl p-3.5 text-xs text-slate-300 italic mb-4">
+                <span id="modal-lore-text"></span>
             </div>
 
-            <div class="space-y-4 text-sm">
-                
-                <!-- Astronomical / Moon Status -->
-                <div class="bg-fantasy-800/80 rounded-2xl p-4 border border-fantasy-700/60">
-                    <h4 class="font-heading text-xs uppercase font-bold text-fantasy-gold tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-moon"></i> Astronomisk status
-                    </h4>
-                    <div id="modal-astronomy-content" class="space-y-2 text-xs">
-                        <!-- Populated dynamically -->
-                    </div>
-                </div>
-
-                <!-- Lore / Information -->
-                <div class="bg-fantasy-800/80 rounded-2xl p-4 border border-fantasy-700/60">
-                    <h4 class="font-heading text-xs uppercase font-bold text-fantasy-gold tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-book-open"></i> Månadens högtid / tradition
-                    </h4>
-                    <p id="modal-lore-text" class="text-xs text-slate-300 leading-relaxed italic">
-                        Information om traditioner...
-                    </p>
-                </div>
-
-                <!-- SL GM Custom Festival Marking Section -->
-                <div class="bg-amber-950/30 rounded-2xl p-4 border border-amber-500/40">
-                    <h4 class="font-heading text-xs uppercase font-bold text-amber-400 tracking-widest mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-crown text-amber-400"></i> Spelledarverktyg: Lägg till / Ändra högtid
-                    </h4>
-                    <p class="text-[11px] text-amber-200/80 mb-3">Markera denna dag som en gyllengul högtidsdag i kalendern.</p>
-                    
-                    <div class="space-y-3">
-                        <div>
-                            <label class="block text-[11px] text-slate-300 font-medium mb-1">Högtidens namn:</label>
-                            <input type="text" id="festival-name-input" placeholder="t.ex. Vårfesten Akitum..." class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 placeholder-slate-500 focus:outline-none focus:border-amber-400">
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-[11px] text-slate-300 font-medium mb-1">Antal dagar (varaktighet):</label>
-                                <input type="number" id="festival-duration-input" min="1" max="28" value="1" class="w-full bg-fantasy-900 border border-amber-500/40 rounded-xl px-3 py-2 text-xs text-amber-100 focus:outline-none focus:border-amber-400">
-                            </div>
-                            <div class="flex items-end gap-2">
-                                <button id="save-festival-btn" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-bold text-xs py-2 px-3 rounded-xl shadow transition">
-                                    Spara högtid
-                                </button>
-                                <button id="delete-festival-btn" class="bg-rose-900/60 hover:bg-rose-800 text-rose-200 text-xs p-2 rounded-xl border border-rose-700 transition" title="Ta bort högtid från denna dag">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="mb-5">
+                <h4 class="font-heading text-xs font-bold text-fantasy-gold uppercase tracking-wider mb-2">Astronomi & Månfaser</h4>
+                <div id="modal-astronomy-content" class="space-y-2 text-xs"></div>
             </div>
-        </div>
-    </div>
 
-    <!-- Year Jump Modal -->
-    <div id="year-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-fantasy-900 border border-fantasy-gold/50 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-slate-200">
-            <button id="close-year-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Hoppa till år</h3>
-            <p class="text-xs text-slate-400 mb-4">Skriv in årtal och välj era (efter eller före Odos uppenbarelse).</p>
-
-            <div class="space-y-4">
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="col-span-2">
-                        <label class="block text-xs text-slate-300 font-medium mb-1">Årtal:</label>
-                        <input type="number" id="year-input-field" min="1" value="610" class="w-full bg-fantasy-800 border border-fantasy-600 rounded-xl px-3 py-2 text-sm text-fantasy-gold font-bold focus:outline-none focus:border-fantasy-gold">
+            <!-- SL Festival Tool -->
+            <div class="border-t border-fantasy-700/60 pt-4">
+                <h4 class="font-heading text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <i class="fa-solid fa-crown"></i> SL-verktyg: Markera lokal högtid / händelse
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
+                    <div class="sm:col-span-2">
+                        <label class="block text-[11px] text-slate-400 mb-1">Högtidens namn</label>
+                        <input type="text" id="festival-name-input" placeholder="T.ex. Skördefest i Rabul" 
+                               class="w-full bg-fantasy-950 border border-fantasy-600 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-fantasy-gold">
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-300 font-medium mb-1">Era:</label>
-                        <select id="era-input-field" class="w-full bg-fantasy-800 border border-fantasy-600 rounded-xl px-2 py-2 text-sm text-fantasy-gold font-bold focus:outline-none focus:border-fantasy-gold">
-                            <option value="e.O.">e.O.</option>
-                            <option value="f.O.">f.O.</option>
-                        </select>
+                        <label class="block text-[11px] text-slate-400 mb-1">Längd (dagar)</label>
+                        <input type="number" id="festival-duration-input" value="1" min="1" max="28" 
+                               class="w-full bg-fantasy-950 border border-fantasy-600 rounded-xl px-3 py-2 text-xs text-white text-center focus:outline-none focus:border-fantasy-gold">
                     </div>
                 </div>
-
-                <div class="flex gap-2">
-                    <button id="confirm-year-btn" class="w-full bg-gradient-to-r from-fantasy-gold to-amber-700 hover:from-amber-400 hover:to-amber-600 text-black font-bold text-xs py-2.5 px-3 rounded-xl shadow transition">
-                        Gå till år
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <button id="delete-festival-btn" type="button" class="px-3 py-2 rounded-xl bg-rose-950/70 hover:bg-rose-900 text-rose-300 border border-rose-700/50 text-xs font-semibold transition">
+                        Ta bort högtid
                     </button>
-                    <button id="cancel-year-modal-btn" class="bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 text-xs py-2.5 px-3 rounded-xl border border-fantasy-700 transition">
-                        Avbryt
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button id="cancel-modal-btn" type="button" class="px-3.5 py-2 rounded-xl bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 text-xs font-semibold transition">
+                            Stäng
+                        </button>
+                        <button id="save-festival-btn" type="button" class="px-4 py-2 rounded-xl bg-fantasy-gold hover:bg-fantasy-goldlight text-black text-xs font-bold shadow transition">
+                            Spara högtid
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Export/Import Modal -->
-    <div id="export-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-fantasy-900 border border-fantasy-gold/50 rounded-3xl max-w-md w-full p-6 shadow-2xl relative text-slate-200">
-            <button id="close-export-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-xmark"></i>
+    <!-- Export / Import Holidays Modal -->
+    <div id="sync-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-fantasy-900 border border-fantasy-gold/60 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button id="close-sync-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
+            <h3 class="font-heading text-xl font-bold text-fantasy-goldlight mb-1">Exportera / Importera högtider</h3>
+            <p class="text-xs text-slate-400 mb-3">Kopiera koden för att dela dina skapade högtidsdagar med spelgruppen, eller klistra in en kod från din SL.</p>
 
-            <h3 class="font-heading text-xl font-bold text-fantasy-gold mb-2">Exportera & Importera högtider</h3>
-            <p class="text-xs text-slate-400 mb-4">Kopiera koden nedan som innehåller alla sparade högtider för alla år, eller klistra in för att importera.</p>
+            <textarea id="sync-textarea" rows="5" class="w-full bg-fantasy-950 border border-fantasy-600 rounded-2xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-fantasy-gold mb-2"></textarea>
+            <div id="sync-status-msg" class="hidden text-xs font-semibold mb-3"></div>
 
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs text-slate-300 font-medium mb-1">Export / import-kod (JSON):</label>
-                    <textarea id="export-textarea" rows="5" placeholder="Klistra in kod här..." class="w-full bg-fantasy-800 border border-fantasy-600 rounded-xl p-3 text-xs font-mono text-amber-200 focus:outline-none focus:border-fantasy-gold"></textarea>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <button id="copy-export-btn" class="bg-fantasy-700 hover:bg-fantasy-600 text-fantasy-gold font-bold text-xs py-2.5 px-3 rounded-xl border border-fantasy-600 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-copy"></i> Kopiera kod
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <button id="copy-sync-btn" type="button" class="px-3.5 py-2 rounded-xl bg-fantasy-800 hover:bg-fantasy-700 text-fantasy-gold border border-fantasy-600 text-xs font-semibold transition">
+                    <i class="fa-solid fa-copy mr-1"></i> Kopiera kod
+                </button>
+                <div class="flex items-center gap-2">
+                    <button id="close-sync-footer-btn" type="button" class="px-3.5 py-2 rounded-xl bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 text-xs font-semibold transition">
+                        Stäng
                     </button>
-                    <button id="import-code-btn" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-bold text-xs py-2.5 px-3 rounded-xl shadow transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-file-arrow-down"></i> Importera
+                    <button id="import-sync-btn" type="button" class="px-4 py-2 rounded-xl bg-fantasy-gold hover:bg-fantasy-goldlight text-black text-xs font-bold shadow transition">
+                        Importera kod
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Application Script -->
     <script>
-        // Data Definitions based on Ereb Altor Lore
-        let currentYearNum = 610;
+        // Core Calendar State
+        let anchorYearNum = 610;
         let currentEra = 'e.O.'; // 'e.O.' or 'f.O.'
         let activeFilter = 'all';
+        let loadedYears = [];
+        let isLoadingMore = false;
 
-        // Eilana full moon step pattern (13, 17, 19, 23, 29, repeating)
+        // In-memory state for checked days and custom festivals per year
+        const checkedDaysStore = {};
+        const customFestivalsStore = {};
+
+        // Modal context
+        let currentModalDay = null;
+        let currentModalYear = null;
+
+        // Eilana prime step cycle (13, 17, 19, 23, 29, repeating)
         const EILANA_PRIME_STEPS = [13, 17, 19, 23, 29];
+        const EILANA_CYCLE_SUM = 101; // 13 + 17 + 19 + 23 + 29
 
-        // Months definition with lore
+        // Months of Ereb Altor (12 months * 28 days = 336 days + 4 intercalary days = 340 days)
         const MONTHS_DATA = [
-            { id: 1, name: "Persil", season: "Vinter / Vår-övergång", lore: "Sådd – firas i vissa delar av Kopparhavet. I nordvästra Samkarna offras två kalvar till Zephor för milda vårvindar och regn." },
-            { id: 2, name: "Gyrsag", season: "Vår", lore: "Karneval – när samhället ställs på sitt huvud, slaven blir furste och fursten blir narr." },
-            { id: 3, name: "Fateska", season: "Vår", lore: "Vårfesten Akitum – början på det nya året. Stora festligheter under tolv dagar i templet Esagila i Rabul." },
-            { id: 4, name: "Iskamsi", season: "Vår", lore: "Hundaugurerna – firas i stora delar av det forna Jorpagna. Spådoms-fest med offer av rödaktiga hunddjur." },
-            { id: 5, name: "Misiska", season: "Sommar", lore: "Eldsfesten – stora brasor tänds från Aidne till Dammvidderna. Orsakar årligen stora bränder och missöden." },
-            { id: 6, name: "Minde", season: "Sommar", lore: "Midsommar – då man väntar på att Inashtar skall återvända från dödsriket. I Zorakin firas dagen som Höga sol." },
-            { id: 7, name: "Melendo", season: "Sommar / Höst", lore: "Höstmarknad – stora handelsfestivaler runt de stora hamnarna." },
-            { id: 8, name: "Byrdo", season: "Höst", lore: "Offerfest – för att fira skörden. Oxar och duvor offras. På Aidne firas Ymnighetsfesten i tre dagar." },
-            { id: 9, name: "Giren", season: "Höst", lore: "Joriska spelen – runt hela Kopparhavet samlas unga för tävlingar. Final utanför Grivelas murar." },
-            { id: 10, name: "Taragan", season: "Höst", lore: "De dödas dag – en tid för hemsökelser och för att vörda förfäderna." },
-            { id: 11, name: "Nusin", season: "Senhöst / Vinter", lore: "Ingen större högtid. En lugn månad för förberedelse inför vintern." },
-            { id: 12, name: "Tannan", season: "Vinter", lore: "Domens dag – vidspridd skuldavskrivning. Föregås ofta av intensiva förhandlingar och kontraktskrivande." }
+            { id: 1, name: "Persil", season: "Vinter", lore: "Midvinterns strängaste månad med gnistrande snö och is. <strong class='font-bold text-slate-100'>Sådd</strong> – firas i vissa delar av Kopparhavet. I nordvästra Samkarna offras två kalvar till Zephor för milda vårvindar och regn. En dubbel-hövdad kalv ger extra lycka." },
+            { id: 2, name: "Gyrsag", season: "Vår", lore: "Snön smälter i dalgångarna och de första knopparna brister. <strong class='font-bold text-slate-100'>Karneval</strong> – när samhället ställs på sitt huvud, slaven blir furste och fursten blir narr." },
+            { id: 3, name: "Fateska", season: "Vår", lore: "Åkrarna besås under bön till jordens och fruktbarhetens makter. <strong class='font-bold text-slate-100'>Vårfesten Akitum</strong> – början på det nya året. Stora festligheter under tolv dagar i templet Esagila i Rabul, gyllene statyer av Marduk och andra gudar på parad genom staden." },
+            { id: 4, name: "Iskamsi", season: "Vår", lore: "Ängarna står i full blom och handelsvägarna öppnar åter efter vinterns isolering. <strong class='font-bold text-slate-100'>Hundaugurerna</strong> – firas i stora delar av det forna Jorpagna. Spådoms-fest med offer av rödaktiga hunddjur. I vissa fall har vargfolksslavar fallit offer för desperata siare." },
+            { id: 5, name: "Misiska", season: "Sommar", lore: "Långa ljusa dagar och varma nätter. Hög tid för sjöfart och fälttåg. <strong class='font-bold text-slate-100'>Eldsfesten</strong> – stora brasor tänds från Aidne till Dammvidderna. Orsakar årligen stora bränder och missöden. Vissa ser festen som olycksbådande och kopplad till Nergel." },
+            { id: 6, name: "Minde", season: "Sommar", lore: "Årets varmaste tid då slätterna gassar i solens sken. <strong class='font-bold text-slate-100'>Midsommar</strong> – då man väntar på att Inashtar skall återvända från dödsriket. På Ereb och i norra Kopparhavet en glädjefest. Runt Dammvidderna och på Soluna istället en tid av törst och klagan. I Zorakin firas dagen som Höga sol, med långa dansprocessioner till Utus ära." },
+            { id: 7, name: "Melendo", season: "Sommar", lore: "De tidiga grödorna bärgas och fruktträdgårdarna dignar under sin tyngd. <strong class='font-bold text-slate-100'>Höstmarknad</strong> – stora handelsfestivaler runt de stora hamnarna." },
+            { id: 8, name: "Byrdo", season: "Höst", lore: "Löven skiftar i guld och rött medan den stora skörden avslutas i byarna. <strong class='font-bold text-slate-100'>Offerfest</strong> – för att fira skörden. Oxar, duvor och andra djur offras till fruktbarhetens gudar. I Lagash dränks 300 svarta svanar till gudin-nan Ninhursags ära. På Aidne firas istället Ymnighetsfesten, med enorma utomhusbanketter i tre dagar." },
+            { id: 9, name: "Giren", season: "Höst", lore: "Kalla vindar sveper in från haven och dimmorna lägger sig tunga över skogarna. <strong class='font-bold text-slate-100'>Joriska spelen</strong> – runt hela Kopparhavet samlas unga och vältränade för tävlingar och utmaningar. De starkaste och skickligaste skickas till den stora finalen utanför Grivelas murar." },
+            { id: 10, name: "Taragan", season: "Höst", lore: "Träden står nakna och den första frosten biter i marken under stjärnklara nätter. <strong class='font-bold text-slate-100'>De dödas dag</strong> – en tid för hemsökelser och för att vörda förfäderna. På Aidnehalvön vaknar de döda till liv under natten, och man lämnar stora festmåltider för att hedra dem." },
+            { id: 11, name: "Nusin", season: "Vinter", lore: "Den första snön faller och mörkret lägger sig tidigt över länderna. Ingen större högtid." },
+            { id: 12, name: "Tannan", season: "Vinter", lore: "Sjöar och floder ligger frusna i väntan på vårens första tecken. <strong class='font-bold text-slate-100'>Domens dag</strong> – vidspridd skuldavskrivning. Föregås ofta av intensiva förhandlingar och kontraktskrivande. Firas sedan hela nästkomman-de dag." }
         ];
 
-        // Intercalary Days (Days falling outside standard months)
-        const INTERCALARY_DAYS = [
-            { afterMonth: 2, name: "Vårdagsjämningen", icon: "fa-sun", lore: "Faller helt utanför månaderna, mellan Gyrsag och Fateska." },
-            { afterMonth: 6, name: "Midsommardagen", icon: "fa-sun-plant-wilt", lore: "Faller helt utanför månaderna, mellan Minde och Melendo." },
-            { afterMonth: 9, name: "Höstdagsjämningen", icon: "fa-leaf", lore: "Faller helt utanför månaderna, mellan Giren och Taragan." },
-            { afterMonth: 12, name: "Midvinter", icon: "fa-snowflake", lore: "Årets mörkaste natt och solens återkomst. Ligger mellan Tannan och Persil." }
-        ];
+        const INTERCALARY_DAYS = {
+            afterMonth2: { name: "Vårdagsjämningen", icon: "fa-seedling", lore: "<strong class='font-bold text-slate-100'>Vårdagsjämningen</strong> – dag och natt är lika långa. Nyåret firas med eldar och vårfester över stora delar av Ereb Altor." },
+            afterMonth6: { name: "Midsommar", icon: "fa-sun", lore: "<strong class='font-bold text-slate-100'>Midsommar</strong> – årets längsta dag och ljusaste natt. Magiska riter och sommarfester hålls vid heliga källor." },
+            afterMonth9: { name: "Höstdagsjämningen", icon: "fa-leaf", lore: "<strong class='font-bold text-slate-100'>Höstdagsjämningen</strong> – skördefestens höjdpunkt då ladorna är fyllda och tacksamhet visas inför den kommande vintern." },
+            afterMonth12: { name: "Midvinter", icon: "fa-snowflake", lore: "<strong class='font-bold text-slate-100'>Midvinter</strong> – årets mörkaste natt och solens återkomst. Årets heligaste dag för de som följer Utu, Shamash, Sholak eller Lysande vägen. Allvarliga ceremonier och vakor hålls under hela natten i Tibor, Arno och Pendon." }
+        };
 
-        // Storage Key Generator
-        function getStorageKey(yearNum, era) {
-            return `ereb_calendar_checked_${era}_${yearNum}`;
-        }
-        function getFestivalsKey(yearNum, era) {
-            return `ereb_calendar_festivals_${era}_${yearNum}`;
+        function getYearKey(yearNum, era) {
+            return `${yearNum}_${era}`;
         }
 
-        // Local Storage Helpers
         function getCheckedDays(yearNum, era) {
-            const data = localStorage.getItem(getStorageKey(yearNum, era));
-            return data ? new Set(JSON.parse(data)) : new Set();
-        }
-
-        function saveCheckedDays(yearNum, era, checkedSet) {
-            localStorage.setItem(getStorageKey(yearNum, era), JSON.stringify(Array.from(checkedSet)));
+            const key = getYearKey(yearNum, era);
+            if (!checkedDaysStore[key]) checkedDaysStore[key] = new Set();
+            return checkedDaysStore[key];
         }
 
         function getCustomFestivals(yearNum, era) {
-            const data = localStorage.getItem(getFestivalsKey(yearNum, era));
-            return data ? JSON.parse(data) : {};
+            const key = getYearKey(yearNum, era);
+            if (!customFestivalsStore[key]) customFestivalsStore[key] = {};
+            return customFestivalsStore[key];
         }
 
-        function saveCustomFestivals(yearNum, era, festivalObj) {
-            localStorage.setItem(getFestivalsKey(yearNum, era), JSON.stringify(festivalObj));
-        }
-
-        function toggleDayChecked(absDayInYear) {
-            const checkedDays = getCheckedDays(currentYearNum, currentEra);
-            
-            if (checkedDays.has(absDayInYear)) {
-                for (let d = absDayInYear; d <= 340; d++) {
-                    checkedDays.delete(d);
-                }
+        function getLinearYearOffset(yearNum, era) {
+            if (era === 'e.O.') {
+                return (yearNum - 1) * 340;
             } else {
-                for (let d = 1; d <= absDayInYear; d++) {
-                    checkedDays.add(d);
-                }
+                return -yearNum * 340;
             }
-
-            saveCheckedDays(currentYearNum, currentEra, checkedDays);
-            renderCalendar();
         }
 
-        function clearAllCheckedDays(yearNum, era) {
-            localStorage.removeItem(getStorageKey(yearNum, era));
-            renderCalendar();
-        }
-
-        // Calculate Eilana full moon days continuously across timeline
-        function calculateEilanaFullMoonsUpToDay() {
-            const eilanaFullMoonDays = new Set();
-            let currentDay = 19;
-            eilanaFullMoonDays.add(currentDay);
-            eilanaFullMoonDays.add(-currentDay);
-
-            let stepIndex = 0;
-            let forwardDay = 19;
-            while (forwardDay <= 300000) {
-                const step = EILANA_PRIME_STEPS[stepIndex % EILANA_PRIME_STEPS.length];
-                forwardDay += step;
-                eilanaFullMoonDays.add(forwardDay);
-                stepIndex++;
-            }
-
-            let backwardDay = 19;
-            stepIndex = EILANA_PRIME_STEPS.length - 1;
-            while (backwardDay >= -300000) {
-                const step = EILANA_PRIME_STEPS[stepIndex % EILANA_PRIME_STEPS.length];
-                backwardDay -= step;
-                eilanaFullMoonDays.add(backwardDay);
-                stepIndex = (stepIndex - 1 + EILANA_PRIME_STEPS.length) % EILANA_PRIME_STEPS.length;
-            }
-
-            return eilanaFullMoonDays;
-        }
-
-        const cachedEilanaMoons = calculateEilanaFullMoonsUpToDay();
-
-        // Precompute elliptical 29-day cycle phases for Tanit
-        // Calculate Eilana full moon dynamically for any day without upper/lower limits
-        // Pattern: 5-step cycle [13, 17, 19, 23, 29] with total sum = 101 days, anchored at Day 19
-        const EILANA_CYCLE_SUM = EILANA_PRIME_STEPS.reduce((a, b) => a + b, 0); // 101
-
-        function getEilanaCycleBounds(globalAbsDay) {
-            const offset = globalAbsDay - 19;
-            const blockIndex = Math.floor(offset / EILANA_CYCLE_SUM);
-            let blockStart = 19 + blockIndex * EILANA_CYCLE_SUM;
-
-            for (let i = 0; i < EILANA_PRIME_STEPS.length; i++) {
-                const step = EILANA_PRIME_STEPS[i];
-                const nextFull = blockStart + step;
-                if (globalAbsDay >= blockStart && globalAbsDay < nextFull) {
-                    return { prevFull: blockStart, nextFull: nextFull };
-                }
-                blockStart = nextFull;
-            }
-            return { prevFull: blockStart, nextFull: blockStart + EILANA_PRIME_STEPS[0] };
-        }
-
-        // Dynamic elliptical 29-day cycle calculation for Tanit (works for any year/era)
         function getTanitPhase(globalAbsDay) {
-            const cycleLength = 29;
-            const eccentricity = 0.13; // Controls drift amplitude (~1 day)
-            const precessionPeriod = 110; // Cycles for one full apsidal rotation (~8.8 years)
+            const period = 29.0;
+            const e = 0.13;
+            const apsidalAngle = (2 * Math.PI * globalAbsDay) / 3009.0;
 
-            const c = Math.floor(globalAbsDay / cycleLength);
-            const cycleStartDay = c * cycleLength;
-            const dayInCycle = globalAbsDay - cycleStartDay;
+            function getTruePhaseAngle(d) {
+                const meanAnomaly = (2 * Math.PI * d) / period;
+                return meanAnomaly + 2 * e * Math.sin(meanAnomaly - apsidalAngle);
+            }
 
-            // New Moon anchors at start of each 29-day cycle (Day 0 / 29)
-            if (dayInCycle === 0) return 'new';
+            const prevAngle = getTruePhaseAngle(globalAbsDay - 0.5);
+            const nextAngle = getTruePhaseAngle(globalAbsDay + 0.5);
 
-            const apsidalAngle = (2 * Math.PI * c) / precessionPeriod;
-            const phases = [
-                { name: 'waxing-half', baseDay: 7.25, angle: Math.PI / 2 },
-                { name: 'full',        baseDay: 14.50, angle: Math.PI },
-                { name: 'waning-half', baseDay: 21.75, angle: (3 * Math.PI) / 2 }
+            const targets = [
+                { angle: 0, phase: 'new' },
+                { angle: Math.PI * 0.5, phase: 'waxing-half' },
+                { angle: Math.PI, phase: 'full' },
+                { angle: Math.PI * 1.5, phase: 'waning-half' }
             ];
 
-            for (let i = 0; i < phases.length; i++) {
-                const p = phases[i];
-                const shift = eccentricity * (cycleLength / (2 * Math.PI)) * Math.sin(p.angle + apsidalAngle) * 1.6;
-                const exactDayOffset = Math.round(p.baseDay + shift);
-                if (dayInCycle === exactDayOffset) {
-                    return p.name;
+            for (const target of targets) {
+                const diffPrev = Math.atan2(Math.sin(prevAngle - target.angle), Math.cos(prevAngle - target.angle));
+                const diffNext = Math.atan2(Math.sin(nextAngle - target.angle), Math.cos(nextAngle - target.angle));
+                if (diffPrev <= 0 && diffNext > 0) {
+                    return target.phase;
                 }
             }
-
             return null;
         }
 
-        // Helper to get moon phase info for Eilana based on dynamic step length, rounded to nearest whole day
+        function isEilanaFullMoon(globalAbsDay) {
+            const anchorDay = 609 * 340 + 13;
+            const delta = globalAbsDay - anchorDay;
+            const k = Math.floor(delta / EILANA_CYCLE_SUM);
+            let pos = k * EILANA_CYCLE_SUM;
+
+            if (pos === delta) return true;
+            for (let i = 0; i < EILANA_PRIME_STEPS.length; i++) {
+                pos += EILANA_PRIME_STEPS[i];
+                if (pos === delta) return true;
+            }
+            return false;
+        }
+
         function getEilanaPhase(globalAbsDay) {
-            const { prevFull, nextFull } = getEilanaCycleBounds(globalAbsDay);
+            if (isEilanaFullMoon(globalAbsDay)) return 'full';
 
-            if (globalAbsDay === prevFull) return 'full';
-
-            const cycleLength = nextFull - prevFull;
-            const dayInCycle = globalAbsDay - prevFull;
-
-            const firstQuarter = Math.round(cycleLength / 4);
-            const midpoint = Math.round(cycleLength / 2);
-            const thirdQuarter = Math.round((3 * cycleLength) / 4);
-
-            if (dayInCycle === midpoint) return 'new';
-            if (dayInCycle === firstQuarter) return 'waning-half'; // Full -> New (Waning)
-            if (dayInCycle === thirdQuarter) return 'waxing-half'; // New -> Full (Waxing)
-
-            return null;
-        }
-
-        // Build 340-day year structure
-        function buildYearStructure(yearNum, era) {
-            let yearStartDay;
-
-            if (era === 'e.O.') {
-                const linearYearIndex = yearNum - 1;
-                yearStartDay = linearYearIndex * 340 + 1;
-            } else {
-                const linearYearIndex = -yearNum;
-                yearStartDay = linearYearIndex * 340 + 1;
+            let prevFull = globalAbsDay - 1;
+            while (!isEilanaFullMoon(prevFull) && prevFull > globalAbsDay - 35) {
+                prevFull--;
             }
 
-            const timeline = [];
+            let nextFull = globalAbsDay + 1;
+            while (!isEilanaFullMoon(nextFull) && nextFull < globalAbsDay + 35) {
+                nextFull++;
+            }
+
+            if (isEilanaFullMoon(prevFull) && isEilanaFullMoon(nextFull)) {
+                const cycleLength = nextFull - prevFull;
+                const dayInCycle = globalAbsDay - prevFull;
+
+                const firstQuarter = Math.round(cycleLength / 4);
+                const midpoint = Math.round(cycleLength / 2);
+                const thirdQuarter = Math.round((3 * cycleLength) / 4);
+
+                if (dayInCycle === midpoint) return 'new';
+                if (dayInCycle === firstQuarter) return 'waning-half';
+                if (dayInCycle === thirdQuarter) return 'waxing-half';
+            }
+            return null;
+        }
+
+        function buildYearStructure(yearNum, era) {
+            const yearStartLinear = getLinearYearOffset(yearNum, era);
+            const blocks = [];
             let absDayInYear = 1;
 
-            MONTHS_DATA.forEach(month => {
+            function makeDayObj(monthDay, monthName, lore) {
+                const globalAbsDay = yearStartLinear + (absDayInYear - 1);
+                const tanitPhase = getTanitPhase(globalAbsDay);
+                const eilanaPhase = getEilanaPhase(globalAbsDay);
+                const issyzygie = (tanitPhase === 'full' && eilanaPhase === 'full');
+
+                const dayObj = {
+                    yearNum,
+                    era,
+                    absDayInYear,
+                    globalAbsDay,
+                    monthDay,
+                    monthName,
+                    lore,
+                    tanitPhase,
+                    eilanaPhase,
+                    issyzygie
+                };
+                absDayInYear++;
+                return dayObj;
+            }
+
+            MONTHS_DATA.forEach((month) => {
                 const days = [];
                 for (let d = 1; d <= 28; d++) {
-                    const globalAbsDay = yearStartDay + (absDayInYear - 1);
-                    const tanitPhase = getTanitPhase(globalAbsDay);
-                    const eilanaPhase = getEilanaPhase(globalAbsDay);
-                    const issyzygie = (tanitPhase === 'full' && eilanaPhase === 'full');
-
-                    days.push({
-                        monthDay: d,
-                        absDayInYear: absDayInYear,
-                        globalAbsDay: globalAbsDay,
-                        tanitPhase: tanitPhase,
-                        eilanaPhase: eilanaPhase,
-                        issyzygie: issyzygie
-                    });
-
-                    absDayInYear++;
+                    days.push(makeDayObj(d, month.name, month.lore));
                 }
-
-                timeline.push({
+                blocks.push({
                     type: 'month',
-                    data: month,
-                    days: days
+                    month,
+                    days
                 });
 
-                const intercalary = INTERCALARY_DAYS.find(i => i.afterMonth === month.id);
-                if (intercalary) {
-                    const globalAbsDay = yearStartDay + (absDayInYear - 1);
-                    const tanitPhase = getTanitPhase(globalAbsDay);
-                    const eilanaPhase = getEilanaPhase(globalAbsDay);
-                    const issyzygie = (tanitPhase === 'full' && eilanaPhase === 'full');
-
-                    timeline.push({
+                if (month.id === 2) {
+                    blocks.push({
                         type: 'intercalary',
-                        data: intercalary,
-                        day: {
-                            absDayInYear: absDayInYear,
-                            globalAbsDay: globalAbsDay,
-                            tanitPhase: tanitPhase,
-                            eilanaPhase: eilanaPhase,
-                            issyzygie: issyzygie
-                        }
+                        intercalary: INTERCALARY_DAYS.afterMonth2,
+                        day: makeDayObj(null, INTERCALARY_DAYS.afterMonth2.name, INTERCALARY_DAYS.afterMonth2.lore)
                     });
-
-                    absDayInYear++;
+                } else if (month.id === 6) {
+                    blocks.push({
+                        type: 'intercalary',
+                        intercalary: INTERCALARY_DAYS.afterMonth6,
+                        day: makeDayObj(null, INTERCALARY_DAYS.afterMonth6.name, INTERCALARY_DAYS.afterMonth6.lore)
+                    });
+                } else if (month.id === 9) {
+                    blocks.push({
+                        type: 'intercalary',
+                        intercalary: INTERCALARY_DAYS.afterMonth9,
+                        day: makeDayObj(null, INTERCALARY_DAYS.afterMonth9.name, INTERCALARY_DAYS.afterMonth9.lore)
+                    });
+                } else if (month.id === 12) {
+                    blocks.push({
+                        type: 'intercalary',
+                        intercalary: INTERCALARY_DAYS.afterMonth12,
+                        day: makeDayObj(null, INTERCALARY_DAYS.afterMonth12.name, INTERCALARY_DAYS.afterMonth12.lore)
+                    });
                 }
             });
 
-            return timeline;
+            return blocks;
         }
 
-        // Main Render Function
-        function renderCalendar() {
-            document.getElementById('current-year-display').innerText = `${currentYearNum} ${currentEra}`;
-            const container = document.getElementById('calendar-container');
-            container.innerHTML = '';
+        function getMoonPhaseIcons(day, sizeClass = 'text-[10px]') {
+            let tanitIcon = '';
+            if (day.tanitPhase === 'full') tanitIcon = `<i class="fa-solid fa-circle text-fantasy-tanit ${sizeClass}" title="Tanit Fullmåne"></i>`;
+            else if (day.tanitPhase === 'new') tanitIcon = `<i class="fa-regular fa-circle text-fantasy-tanit ${sizeClass}" title="Tanit Nymåne"></i>`;
+            else if (day.tanitPhase === 'waxing-half') tanitIcon = `<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit ${sizeClass}" title="Tanit Tilltagande Halvmåne"></i>`;
+            else if (day.tanitPhase === 'waning-half') tanitIcon = `<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit ${sizeClass}" title="Tanit Avtagande Halvmåne"></i>`;
 
-            const checkedDays = getCheckedDays(currentYearNum, currentEra);
-            const customFestivals = getCustomFestivals(currentYearNum, currentEra);
-            const timeline = buildYearStructure(currentYearNum, currentEra);
+            let eilanaIcon = '';
+            if (day.eilanaPhase === 'full') eilanaIcon = `<i class="fa-solid fa-circle text-fantasy-eilana ${sizeClass}" title="Eilana Fullmåne"></i>`;
+            else if (day.eilanaPhase === 'new') eilanaIcon = `<i class="fa-regular fa-circle text-fantasy-eilana ${sizeClass}" title="Eilana Nymåne"></i>`;
+            else if (day.eilanaPhase === 'waxing-half') eilanaIcon = `<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana ${sizeClass}" title="Eilana Tilltagande Halvmåne"></i>`;
+            else if (day.eilanaPhase === 'waning-half') eilanaIcon = `<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana ${sizeClass}" title="Eilana Avtagande Halvmåne"></i>`;
 
-            const progressPercent = Math.round((checkedDays.size / 340) * 100);
-            document.getElementById('year-progress-text').innerText = `${checkedDays.size} / 340 dagar (${progressPercent}%)`;
-
-            timeline.forEach(item => {
-                if (item.type === 'month') {
-                    const monthCard = renderMonthCard(item.data, item.days, checkedDays, customFestivals);
-                    container.appendChild(monthCard);
-                } else if (item.type === 'intercalary') {
-                    const intercalaryCard = renderIntercalaryCard(item.data, item.day, checkedDays);
-                    container.appendChild(intercalaryCard);
-                }
-            });
-
-            applyFilters();
+            return { tanitIcon, eilanaIcon };
         }
 
-        // Render Standard Month Card
+        function doesDayMatchFilter(day) {
+            if (activeFilter === 'all') return true;
+            if (activeFilter === 'moons') return day.tanitPhase === 'full' || day.eilanaPhase === 'full';
+            if (activeFilter === 'newmoons') return day.tanitPhase === 'new' || day.eilanaPhase === 'new';
+            if (activeFilter === 'syzygie') return day.issyzygie;
+            return true;
+        }
+
         function renderMonthCard(month, days, checkedDays, customFestivals) {
+            const visibleDays = days.filter(doesDayMatchFilter);
+            if (visibleDays.length === 0) return null;
+
             const card = document.createElement('div');
             card.className = 'month-block bg-fantasy-900/80 border border-fantasy-600/40 rounded-3xl p-5 shadow-xl transition';
 
@@ -705,7 +659,7 @@
             const daysGrid = document.createElement('div');
             daysGrid.className = 'grid grid-cols-4 sm:grid-cols-7 gap-2';
 
-            days.forEach(day => {
+            visibleDays.forEach(day => {
                 const dayNode = document.createElement('div');
                 const isChecked = checkedDays.has(day.absDayInYear);
                 const festivalInfo = customFestivals[day.absDayInYear];
@@ -720,39 +674,19 @@
                     textStyle = 'text-amber-200 font-semibold';
                     festivalBadge = `
                         <div class="text-[9px] leading-tight text-amber-300 truncate w-full mt-1 bg-amber-950/80 px-1 py-0.5 rounded border border-amber-500/30">
-                            <i class="fa-solid fa-crown text-[8px] mr-0.5 text-amber-400"></i>${festivalInfo.name} ${festivalInfo.dayNum ? `(${festivalInfo.dayNum}/${festivalInfo.totalDays})` : ''}
+                            <i class="fa-solid fa-crown text-[8px] mr-0.5 text-amber-400"></i>${festivalInfo.name} ${festivalInfo.totalDays > 1 ? `(${festivalInfo.dayNum}/${festivalInfo.totalDays})` : ''}
                         </div>`;
                 }
 
-                let tanitIcon = '';
-                if (day.tanitPhase === 'full') {
-                    tanitIcon = '<i class="fa-solid fa-circle text-fantasy-tanit text-[10px]" title="Tanit Fullmåne"></i>';
-                } else if (day.tanitPhase === 'new') {
-                    tanitIcon = '<i class="fa-regular fa-circle text-fantasy-tanit text-[10px]" title="Tanit Nymåne"></i>';
-                } else if (day.tanitPhase === 'waxing-half') {
-                    tanitIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit text-[10px]" title="Tanit Tilltagande Halvmåne"></i>';
-                } else if (day.tanitPhase === 'waning-half') {
-                    tanitIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit text-[10px]" title="Tanit Avtagande Halvmåne"></i>';
-                }
-
-                let eilanaIcon = '';
-                if (day.eilanaPhase === 'full') {
-                    eilanaIcon = '<i class="fa-solid fa-circle text-fantasy-eilana text-[10px]" title="Eilana Fullmåne"></i>';
-                } else if (day.eilanaPhase === 'new') {
-                    eilanaIcon = '<i class="fa-regular fa-circle text-fantasy-eilana text-[10px]" title="Eilana Nymåne"></i>';
-                } else if (day.eilanaPhase === 'waxing-half') {
-                    eilanaIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana text-[10px]" title="Eilana Tilltagande Halvmåne"></i>';
-                } else if (day.eilanaPhase === 'waning-half') {
-                    eilanaIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana text-[10px]" title="Eilana Avtagande Halvmåne"></i>';
-                }
+                const { tanitIcon, eilanaIcon } = getMoonPhaseIcons(day, 'text-[10px]');
 
                 if (day.issyzygie) {
                     borderStyle = 'border-fantasy-syzygie bg-gradient-to-br from-rose-950/80 to-fantasy-800 syzygie-glow';
                     moonBadge = `<span class="flex items-center gap-1 animate-pulse">${tanitIcon}${eilanaIcon}</span>`;
                 } else {
-                    if (day.tanitPhase === 'full') borderStyle = borderStyle.includes('amber') ? borderStyle : 'border-fantasy-tanit/60 bg-fantasy-800/80 tanit-glow';
-                    if (day.eilanaPhase === 'full') borderStyle = borderStyle.includes('amber') ? borderStyle : 'border-fantasy-eilana/60 bg-fantasy-800/80 eilana-glow';
-                    
+                    if (day.tanitPhase === 'full' && !festivalInfo) borderStyle = 'border-fantasy-tanit/60 bg-fantasy-800/80 tanit-glow';
+                    if (day.eilanaPhase === 'full' && !festivalInfo) borderStyle = 'border-fantasy-eilana/60 bg-fantasy-800/80 eilana-glow';
+
                     if (tanitIcon || eilanaIcon) {
                         moonBadge = `<span class="flex items-center gap-1">${tanitIcon}${eilanaIcon}</span>`;
                     }
@@ -763,7 +697,6 @@
                 }
 
                 dayNode.className = `day-node rounded-xl p-2.5 border transition cursor-pointer flex flex-col justify-between min-h-[64px] relative ${borderStyle}`;
-                dayNode.dataset.dayJson = JSON.stringify(day);
 
                 const checkMark = isChecked ? '<i class="fa-solid fa-check text-emerald-400 absolute top-1.5 right-1.5 text-xs"></i>' : '';
 
@@ -785,7 +718,7 @@
 
                 dayNode.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
-                    toggleDayChecked(day.absDayInYear);
+                    toggleDayChecked(day.yearNum, day.absDayInYear);
                 });
 
                 daysGrid.appendChild(dayNode);
@@ -795,25 +728,16 @@
             return card;
         }
 
-        // Render Intercalary Extra Day
         function renderIntercalaryCard(intercalary, day, checkedDays) {
+            if (!doesDayMatchFilter(day)) return null;
+
             const banner = document.createElement('div');
             const isChecked = checkedDays.has(day.absDayInYear);
 
             let bgStyles = 'bg-gradient-to-r from-fantasy-900 via-amber-950/40 to-fantasy-900 border-fantasy-gold/50 text-fantasy-goldlight';
             let moonBadge = '';
 
-            let tanitIcon = '';
-            if (day.tanitPhase === 'full') tanitIcon = '<i class="fa-solid fa-circle text-fantasy-tanit"></i>';
-            else if (day.tanitPhase === 'new') tanitIcon = '<i class="fa-regular fa-circle text-fantasy-tanit"></i>';
-            else if (day.tanitPhase === 'waxing-half') tanitIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-tanit"></i>';
-            else if (day.tanitPhase === 'waning-half') tanitIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-tanit"></i>';
-
-            let eilanaIcon = '';
-            if (day.eilanaPhase === 'full') eilanaIcon = '<i class="fa-solid fa-circle text-fantasy-eilana"></i>';
-            else if (day.eilanaPhase === 'new') eilanaIcon = '<i class="fa-regular fa-circle text-fantasy-eilana"></i>';
-            else if (day.eilanaPhase === 'waxing-half') eilanaIcon = '<i class="fa-solid fa-circle-half-stroke text-fantasy-eilana"></i>';
-            else if (day.eilanaPhase === 'waning-half') eilanaIcon = '<i class="fa-solid fa-circle-half-stroke fa-flip-horizontal text-fantasy-eilana"></i>';
+            const { tanitIcon, eilanaIcon } = getMoonPhaseIcons(day, 'text-xs');
 
             if (day.issyzygie) {
                 bgStyles = 'bg-gradient-to-r from-rose-950/70 via-fantasy-800 to-rose-950/70 border-fantasy-syzygie syzygie-glow text-fantasy-syzygie';
@@ -824,17 +748,17 @@
             } else if (day.tanitPhase === 'full') {
                 bgStyles = 'bg-gradient-to-r from-sky-950/60 via-fantasy-800 to-sky-950/60 border-fantasy-tanit tanit-glow text-fantasy-tanit';
                 moonBadge = `
-                    <span class="flex items-center gap-1.5 bg-fantasy-tanit/20 border border-fantasy-tanit px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-tanit animate-pulse">
+                    <span class="flex items-center gap-1.5 bg-fantasy-tanit/20 border border-fantasy-tanit px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-tanit">
                         ${tanitIcon} ${eilanaIcon} Fullmåne på högtidsdag!
                     </span>`;
             } else if (day.eilanaPhase === 'full') {
                 bgStyles = 'bg-gradient-to-r from-purple-950/60 via-fantasy-800 to-purple-950/60 border-fantasy-eilana eilana-glow text-fantasy-eilana';
                 moonBadge = `
-                    <span class="flex items-center gap-1.5 bg-fantasy-eilana/20 border border-fantasy-eilana px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-eilana animate-pulse">
+                    <span class="flex items-center gap-1.5 bg-fantasy-eilana/20 border border-fantasy-eilana px-2.5 py-1 rounded-full text-xs font-semibold text-fantasy-eilana">
                         ${tanitIcon} ${eilanaIcon} Fullmåne på högtidsdag!
                     </span>`;
             } else if (tanitIcon || eilanaIcon) {
-                moonBadge = `<span class="flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-fantasy-800 border border-fantasy-700">${tanitIcon} ${eilanaIcon}</span>`;
+                moonBadge = `<span class="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-fantasy-800 border border-fantasy-700">${tanitIcon} ${eilanaIcon}</span>`;
             }
 
             if (isChecked) {
@@ -842,7 +766,6 @@
             }
 
             banner.className = `intercalary-block rounded-2xl p-4 border shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer transition hover:scale-[1.005] ${bgStyles}`;
-            banner.dataset.dayJson = JSON.stringify(day);
             
             const checkIcon = isChecked ? '<i class="fa-solid fa-check text-emerald-400"></i> ' : '';
 
@@ -852,7 +775,7 @@
                         <i class="fa-solid ${intercalary.icon}"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 flex-wrap">
                             <h3 class="font-heading text-lg font-bold text-fantasy-gold">${checkIcon}${intercalary.name}</h3>
                             <span class="text-[10px] bg-fantasy-gold/20 text-fantasy-gold px-2 py-0.5 rounded border border-fantasy-gold/30 font-semibold uppercase">Fristående högtidsdag</span>
                         </div>
@@ -872,112 +795,164 @@
 
             banner.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
-                toggleDayChecked(day.absDayInYear);
+                toggleDayChecked(day.yearNum, day.absDayInYear);
             });
 
             return banner;
         }
 
-        // Apply filters
-        function applyFilters() {
-            const monthBlocks = document.querySelectorAll('.month-block');
-            const intercalaryBlocks = document.querySelectorAll('.intercalary-block');
-            const emptyMessage = document.getElementById('empty-filter-message');
+        function buildYearSectionElement(yearNum, era) {
+            const section = document.createElement('section');
+            section.className = 'year-section space-y-6';
+            section.dataset.year = yearNum;
+            section.dataset.era = era;
 
-            if (activeFilter === 'all') {
-                monthBlocks.forEach(mb => mb.classList.remove('hidden'));
-                document.querySelectorAll('.day-node').forEach(node => {
-                    node.classList.remove('opacity-20', 'hidden');
-                });
-                intercalaryBlocks.forEach(b => b.classList.remove('opacity-20', 'hidden'));
-                if (emptyMessage) emptyMessage.classList.add('hidden');
-                return;
+            const divider = document.createElement('div');
+            divider.className = 'flex items-center gap-4 pt-2';
+            divider.innerHTML = `
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-fantasy-gold/50 to-fantasy-gold"></div>
+                <div class="px-5 py-1.5 rounded-full bg-fantasy-900 border border-fantasy-gold/60 shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-star text-fantasy-gold text-xs"></i>
+                    <span class="font-heading font-bold text-lg text-fantasy-goldlight tracking-wider">${yearNum} ${era}</span>
+                    <i class="fa-solid fa-star text-fantasy-gold text-xs"></i>
+                </div>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent via-fantasy-gold/50 to-fantasy-gold"></div>
+            `;
+            section.appendChild(divider);
+
+            const blocks = buildYearStructure(yearNum, era);
+            const checkedDays = getCheckedDays(yearNum, era);
+            const customFestivals = getCustomFestivals(yearNum, era);
+
+            let renderedCount = 0;
+
+            blocks.forEach(block => {
+                if (block.type === 'month') {
+                    const card = renderMonthCard(block.month, block.days, checkedDays, customFestivals);
+                    if (card) {
+                        section.appendChild(card);
+                        renderedCount++;
+                    }
+                } else if (block.type === 'intercalary') {
+                    const banner = renderIntercalaryCard(block.intercalary, block.day, checkedDays);
+                    if (banner) {
+                        section.appendChild(banner);
+                        renderedCount++;
+                    }
+                }
+            });
+
+            if (renderedCount === 0) {
+                section.classList.add('hidden');
             }
 
-            let totalVisibleItems = 0;
+            return section;
+        }
 
-            // Filter day nodes inside each month and hide empty months
-            monthBlocks.forEach(mb => {
-                const dayNodes = mb.querySelectorAll('.day-node');
-                let visibleDaysInMonth = 0;
+        function updateYearHeaderAndProgress() {
+            const displayEl = document.getElementById('selected-year-display');
+            if (displayEl) {
+                displayEl.innerText = `${anchorYearNum} ${currentEra.toUpperCase()}`;
+            }
 
-                dayNodes.forEach(node => {
-                    const dayData = JSON.parse(node.dataset.dayJson);
-                    let matches = false;
-
-                    if (activeFilter === 'moons') {
-                        matches = (dayData.tanitPhase === 'full' || dayData.eilanaPhase === 'full');
-                    } else if (activeFilter === 'newmoons') {
-                        matches = (dayData.tanitPhase === 'new' || dayData.eilanaPhase === 'new');
-                    } else if (activeFilter === 'syzygie') {
-                        matches = dayData.issyzygie;
-                    }
-
-                    if (matches) {
-                        node.classList.remove('hidden', 'opacity-20');
-                        visibleDaysInMonth++;
-                        totalVisibleItems++;
-                    } else {
-                        node.classList.add('hidden');
-                    }
-                });
-
-                if (visibleDaysInMonth === 0) {
-                    mb.classList.add('hidden');
-                } else {
-                    mb.classList.remove('hidden');
-                }
-            });
-
-            // Filter intercalary standalone days
-            intercalaryBlocks.forEach(b => {
-                const dayData = b.dataset.dayJson ? JSON.parse(b.dataset.dayJson) : null;
-                let matches = false;
-
-                if (dayData) {
-                    if (activeFilter === 'moons') {
-                        matches = (dayData.tanitPhase === 'full' || dayData.eilanaPhase === 'full');
-                    } else if (activeFilter === 'newmoons') {
-                        matches = (dayData.tanitPhase === 'new' || dayData.eilanaPhase === 'new');
-                    } else if (activeFilter === 'syzygie') {
-                        matches = dayData.issyzygie;
-                    }
-                } else {
-                    const isSyzygie = b.classList.contains('syzygie-glow');
-                    const isTanitFull = b.classList.contains('tanit-glow');
-                    const isEilanaFull = b.classList.contains('eilana-glow');
-                    if (activeFilter === 'moons') matches = (isSyzygie || isTanitFull || isEilanaFull);
-                    else if (activeFilter === 'syzygie') matches = isSyzygie;
-                }
-
-                if (matches) {
-                    b.classList.remove('hidden', 'opacity-20');
-                    totalVisibleItems++;
-                } else {
-                    b.classList.add('hidden');
-                }
-            });
-
-            // Show empty state message if nothing matched
-            if (emptyMessage) {
-                if (totalVisibleItems === 0) {
-                    emptyMessage.classList.remove('hidden');
-                } else {
-                    emptyMessage.classList.add('hidden');
-                }
+            const checked = getCheckedDays(anchorYearNum, currentEra);
+            const count = checked.size;
+            const pct = Math.round((count / 340) * 100);
+            const progressEl = document.getElementById('year-progress-text');
+            if (progressEl) {
+                progressEl.innerText = `${count} / 340 dagar (${pct}%)`;
             }
         }
 
-        // Modal Handler & GM Festival Editor
-        let currentModalDay = null;
+        function renderCalendarStream() {
+            const stream = document.getElementById('calendar-stream');
+            stream.innerHTML = '';
+
+            let totalVisibleSections = 0;
+
+            loadedYears.forEach(yearNum => {
+                const sectionEl = buildYearSectionElement(yearNum, currentEra);
+                if (!sectionEl.classList.contains('hidden')) {
+                    totalVisibleSections++;
+                }
+                stream.appendChild(sectionEl);
+            });
+
+            const emptyMsg = document.getElementById('empty-filter-message');
+            if (totalVisibleSections === 0) {
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+            }
+
+            updateYearHeaderAndProgress();
+        }
+
+        function setYearAndRender(yearNum) {
+            const validYear = Math.max(1, Math.min(9999, parseInt(yearNum, 10) || 610));
+            anchorYearNum = validYear;
+            loadedYears = [validYear];
+            document.getElementById('year-input').value = validYear;
+            renderCalendarStream();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getNextChronologicalYear(yearNum, era) {
+            if (era === 'e.O.') return { year: yearNum + 1, era: 'e.O.' };
+            if (yearNum > 1) return { year: yearNum - 1, era: 'f.O.' };
+            return { year: 1, era: 'e.O.' };
+        }
+
+        function getPrevChronologicalYear(yearNum, era) {
+            if (era === 'f.O.') return { year: yearNum + 1, era: 'f.O.' };
+            if (yearNum > 1) return { year: yearNum - 1, era: 'e.O.' };
+            return { year: 1, era: 'f.O.' };
+        }
+
+        function toggleDayChecked(yearNum, absDayInYear) {
+            const checked = getCheckedDays(yearNum, currentEra);
+            const yearBlocks = buildYearStructure(yearNum, currentEra);
+            const allYearDays = [];
+            yearBlocks.forEach(b => {
+                if (b.type === 'month') {
+                    allYearDays.push(...b.days);
+                } else if (b.type === 'intercalary') {
+                    allYearDays.push(b.day);
+                }
+            });
+
+            allYearDays.sort((a, b) => a.absDayInYear - b.absDayInYear);
+
+            const targetIndex = allYearDays.findIndex(d => d.absDayInYear === absDayInYear);
+            if (targetIndex === -1) {
+                if (checked.has(absDayInYear)) checked.delete(absDayInYear);
+                else checked.add(absDayInYear);
+                renderCalendarStream();
+                return;
+            }
+
+            const isCurrentlyChecked = checked.has(absDayInYear);
+
+            if (!isCurrentlyChecked) {
+                for (let i = 0; i <= targetIndex; i++) {
+                    checked.add(allYearDays[i].absDayInYear);
+                }
+            } else {
+                for (let i = targetIndex; i < allYearDays.length; i++) {
+                    checked.delete(allYearDays[i].absDayInYear);
+                }
+            }
+
+            renderCalendarStream();
+        }
 
         function openDayModal(day, titleName, loreText) {
             currentModalDay = day;
-            
+            currentModalYear = day.yearNum;
+
             document.getElementById('modal-title').innerText = titleName;
-            document.getElementById('modal-subtitle').innerText = `Dag #${day.absDayInYear} under år ${currentYearNum} ${currentEra}`;
-            document.getElementById('modal-day-badge').innerText = day.monthDay || '★';
-            document.getElementById('modal-lore-text').innerText = loreText;
+            document.getElementById('modal-subtitle').innerText = `Dag #${day.absDayInYear} under år ${day.yearNum} ${day.era}`;
+            document.getElementById('modal-lore-text').innerHTML = loreText;
 
             const astroContent = document.getElementById('modal-astronomy-content');
             let astroHtml = '';
@@ -1009,7 +984,7 @@
 
             astroContent.innerHTML = astroHtml;
 
-            const customFestivals = getCustomFestivals(currentYearNum, currentEra);
+            const customFestivals = getCustomFestivals(day.yearNum, day.era);
             const existingFest = customFestivals[day.absDayInYear];
 
             const nameInput = document.getElementById('festival-name-input');
@@ -1026,208 +1001,363 @@
             document.getElementById('day-modal').classList.remove('hidden');
         }
 
-        // Save GM Custom Festival
+        function closeDayModal() {
+            document.getElementById('day-modal').classList.add('hidden');
+            currentModalDay = null;
+        }
+
         document.getElementById('save-festival-btn').addEventListener('click', () => {
             if (!currentModalDay) return;
+            const nameVal = document.getElementById('festival-name-input').value.trim();
+            const durationVal = Math.max(1, Math.min(28, parseInt(document.getElementById('festival-duration-input').value, 10) || 1));
 
-            const name = document.getElementById('festival-name-input').value.trim();
-            const duration = parseInt(document.getElementById('festival-duration-input').value, 10) || 1;
+            const festivals = getCustomFestivals(currentModalDay.yearNum, currentModalDay.era);
 
-            if (!name) {
-                alert('Vänligen ange ett namn på högtiden.');
-                return;
-            }
-
-            const customFestivals = getCustomFestivals(currentYearNum, currentEra);
-
-            for (let d = 0; d < duration; d++) {
-                const targetAbsDay = currentModalDay.absDayInYear + d;
-                if (targetAbsDay <= 340) {
-                    customFestivals[targetAbsDay] = {
-                        name: name,
-                        dayNum: d + 1,
-                        totalDays: duration
-                    };
+            if (!nameVal) {
+                delete festivals[currentModalDay.absDayInYear];
+            } else {
+                for (let i = 0; i < durationVal; i++) {
+                    const targetDay = currentModalDay.absDayInYear + i;
+                    if (targetDay <= 340) {
+                        festivals[targetDay] = {
+                            name: nameVal,
+                            dayNum: i + 1,
+                            totalDays: durationVal
+                        };
+                    }
                 }
             }
 
-            saveCustomFestivals(currentYearNum, currentEra, customFestivals);
-            document.getElementById('day-modal').classList.add('hidden');
-            renderCalendar();
+            closeDayModal();
+            renderCalendarStream();
         });
 
         document.getElementById('delete-festival-btn').addEventListener('click', () => {
             if (!currentModalDay) return;
-            const customFestivals = getCustomFestivals(currentYearNum, currentEra);
-            
-            delete customFestivals[currentModalDay.absDayInYear];
-            
-            saveCustomFestivals(currentYearNum, currentEra, customFestivals);
-            document.getElementById('day-modal').classList.add('hidden');
-            renderCalendar();
+            const festivals = getCustomFestivals(currentModalDay.yearNum, currentModalDay.era);
+            delete festivals[currentModalDay.absDayInYear];
+            closeDayModal();
+            renderCalendarStream();
         });
 
-        // Export & Import Handlers
-        const exportModal = document.getElementById('export-modal');
-        const exportTextarea = document.getElementById('export-textarea');
+        document.getElementById('close-modal-btn').addEventListener('click', closeDayModal);
+        document.getElementById('cancel-modal-btn').addEventListener('click', closeDayModal);
 
-        document.getElementById('export-import-btn').addEventListener('click', () => {
-            const allExportData = {};
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('ereb_calendar_festivals_')) {
-                    const parts = key.split('_');
-                    const era = parts[3];
-                    const yearNum = parts[4];
-                    const compositeKey = `${yearNum} ${era}`;
-                    
-                    try {
-                        const festivalObj = JSON.parse(localStorage.getItem(key));
-                        if (festivalObj && Object.keys(festivalObj).length > 0) {
-                            allExportData[compositeKey] = festivalObj;
-                        }
-                    } catch (e) {
-                        // skip
-                    }
-                }
-            }
-
-            exportTextarea.value = JSON.stringify(allExportData, null, 2);
-            exportModal.classList.remove('hidden');
-        });
-
-        document.getElementById('close-export-modal-btn').addEventListener('click', () => {
-            exportModal.classList.add('hidden');
-        });
-
-        document.getElementById('copy-export-btn').addEventListener('click', () => {
-            exportTextarea.select();
-            document.execCommand('copy');
-            alert('Koden har kopierats till urklipp!');
-        });
-
-        document.getElementById('import-code-btn').addEventListener('click', () => {
-            try {
-                const parsed = JSON.parse(exportTextarea.value.trim());
-                let importedCount = 0;
-
-                if (typeof parsed === 'object' && parsed !== null) {
-                    for (const [compositeKey, festivalsData] of Object.entries(parsed)) {
-                        const parts = compositeKey.trim().split(' ');
-                        if (parts.length >= 2) {
-                            const yearNum = parseInt(parts[0], 10);
-                            const era = parts[1];
-                            if (!isNaN(yearNum) && (era === 'e.O.' || era === 'f.O.')) {
-                                saveCustomFestivals(yearNum, era, festivalsData);
-                                importedCount++;
-                            }
-                        }
-                    }
-                }
-
-                renderCalendar();
-                exportModal.classList.add('hidden');
-                alert(`Högtiderna har importerats framgångsrikt (${importedCount} års register uppdaterade)!`);
-            } catch (err) {
-                alert('Ogiltig konfigurationskod. Kontrollera att du klistrat in rätt JSON-data.');
-            }
-        });
-
-        // Navigation & Filter Listeners
-        document.getElementById('prev-year-btn').addEventListener('click', () => {
-            if (currentEra === 'e.O.') {
-                if (currentYearNum > 1) {
-                    currentYearNum--;
-                } else {
-                    currentEra = 'f.O.';
-                    currentYearNum = 1;
-                }
+        function setEra(newEra) {
+            currentEra = newEra;
+            const foBtn = document.getElementById('era-fo-btn');
+            const eoBtn = document.getElementById('era-eo-btn');
+            if (newEra === 'f.O.') {
+                foBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-semibold transition bg-fantasy-gold text-black shadow';
+                eoBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white';
             } else {
-                currentYearNum++;
+                eoBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-semibold transition bg-fantasy-gold text-black shadow';
+                foBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white';
             }
-            renderCalendar();
+            setYearAndRender(anchorYearNum);
+        }
+
+        document.getElementById('era-fo-btn').addEventListener('click', () => setEra('f.O.'));
+        document.getElementById('era-eo-btn').addEventListener('click', () => setEra('e.O.'));
+
+        document.getElementById('prev-year-btn').addEventListener('click', () => {
+            const prev = getPrevChronologicalYear(anchorYearNum, currentEra);
+            if (prev.era !== currentEra) setEra(prev.era);
+            setYearAndRender(prev.year);
         });
 
         document.getElementById('next-year-btn').addEventListener('click', () => {
-            if (currentEra === 'f.O.') {
-                if (currentYearNum > 1) {
-                    currentYearNum--;
-                } else {
-                    currentEra = 'e.O.';
-                    currentYearNum = 1;
-                }
-            } else {
-                currentYearNum++;
-            }
-            renderCalendar();
+            const next = getNextChronologicalYear(anchorYearNum, currentEra);
+            if (next.era !== currentEra) setEra(next.era);
+            setYearAndRender(next.year);
         });
 
-        const yearModal = document.getElementById('year-modal');
-        const yearInputField = document.getElementById('year-input-field');
-        const eraInputField = document.getElementById('era-input-field');
-
-        document.getElementById('open-year-modal-btn').addEventListener('click', () => {
-            yearInputField.value = currentYearNum;
-            eraInputField.value = currentEra;
-            yearModal.classList.remove('hidden');
-            yearInputField.focus();
-            yearInputField.select();
-        });
-
-        document.getElementById('close-year-modal-btn').addEventListener('click', () => {
-            yearModal.classList.add('hidden');
-        });
-
-        document.getElementById('cancel-year-modal-btn').addEventListener('click', () => {
-            yearModal.classList.add('hidden');
-        });
-
-        document.getElementById('confirm-year-btn').addEventListener('click', () => {
-            const parsedYear = parseInt(yearInputField.value.trim(), 10);
-            const parsedEra = eraInputField.value;
-            if (!isNaN(parsedYear) && parsedYear >= 1) {
-                currentYearNum = parsedYear;
-                currentEra = parsedEra;
-                renderCalendar();
-                yearModal.classList.add('hidden');
-            } else {
-                alert('Vänligen ange ett giltigt årtal (1 eller högre).');
+        // Jump to Year Popover Logic
+        const jumpPopover = document.getElementById('jump-year-popover');
+        document.getElementById('jump-year-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            jumpPopover.classList.toggle('hidden');
+            if (!jumpPopover.classList.contains('hidden')) {
+                document.getElementById('year-input').focus();
+                document.getElementById('year-input').select();
             }
         });
 
-        yearInputField.addEventListener('keypress', (e) => {
+        document.getElementById('close-jump-popover').addEventListener('click', () => {
+            jumpPopover.classList.add('hidden');
+        });
+
+        document.getElementById('apply-jump-year-btn').addEventListener('click', () => {
+            const val = document.getElementById('year-input').value;
+            jumpPopover.classList.add('hidden');
+            setYearAndRender(val);
+        });
+
+        document.getElementById('year-input').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                document.getElementById('confirm-year-btn').click();
+                jumpPopover.classList.add('hidden');
+                setYearAndRender(e.target.value);
             }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!jumpPopover.contains(e.target) && e.target.id !== 'jump-year-btn') {
+                jumpPopover.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('reset-610-btn').addEventListener('click', () => {
+            jumpPopover.classList.add('hidden');
+            setEra('e.O.');
+            setYearAndRender(610);
         });
 
         document.getElementById('reset-checked-btn').addEventListener('click', () => {
-            clearAllCheckedDays(currentYearNum, currentEra);
+            loadedYears.forEach(yr => {
+                const key = getYearKey(yr, currentEra);
+                checkedDaysStore[key] = new Set();
+            });
+            renderCalendarStream();
         });
 
-        document.getElementById('close-modal-btn').addEventListener('click', () => {
-            document.getElementById('day-modal').classList.add('hidden');
+        document.getElementById('export-import-btn').addEventListener('click', () => {
+            const payload = JSON.stringify(customFestivalsStore);
+            document.getElementById('sync-textarea').value = payload;
+            document.getElementById('sync-status-msg').classList.add('hidden');
+            document.getElementById('sync-modal').classList.remove('hidden');
+        });
+
+        function closeSyncModal() {
+            document.getElementById('sync-modal').classList.add('hidden');
+        }
+
+        document.getElementById('close-sync-btn').addEventListener('click', closeSyncModal);
+        document.getElementById('close-sync-footer-btn').addEventListener('click', closeSyncModal);
+
+        document.getElementById('copy-sync-btn').addEventListener('click', () => {
+            const ta = document.getElementById('sync-textarea');
+            ta.select();
+            document.execCommand('copy');
+            const msg = document.getElementById('sync-status-msg');
+            msg.innerText = 'Koden har kopierats till urklipp!';
+            msg.className = 'text-xs font-semibold text-emerald-400 mb-3';
+            msg.classList.remove('hidden');
+        });
+
+        document.getElementById('import-sync-btn').addEventListener('click', () => {
+            const raw = document.getElementById('sync-textarea').value.trim();
+            const msg = document.getElementById('sync-status-msg');
+            try {
+                const parsed = JSON.parse(raw);
+                if (typeof parsed === 'object' && parsed !== null) {
+                    Object.assign(customFestivalsStore, parsed);
+                    renderCalendarStream();
+                    msg.innerText = 'Högtidsdagar har importerats!';
+                    msg.className = 'text-xs font-semibold text-emerald-400 mb-3';
+                    msg.classList.remove('hidden');
+                }
+            } catch (err) {
+                msg.innerText = 'Ogiltig kod. Kontrollera att du kopierat hela texten.';
+                msg.className = 'text-xs font-semibold text-rose-400 mb-3';
+                msg.classList.remove('hidden');
+            }
         });
 
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('bg-fantasy-gold', 'text-black');
-                    b.classList.add('bg-fantasy-800', 'text-slate-300');
+                    b.className = 'filter-btn bg-fantasy-800 hover:bg-fantasy-700 text-slate-300 font-semibold text-xs py-2 px-3 rounded-xl border border-fantasy-700 transition flex items-center justify-between';
                 });
-
-                const target = e.currentTarget;
-                target.classList.remove('bg-fantasy-800', 'text-slate-300');
-                target.classList.add('bg-fantasy-gold', 'text-black');
-
-                activeFilter = target.dataset.filter;
-                applyFilters();
+                btn.className = 'filter-btn active bg-fantasy-gold text-black font-semibold text-xs py-2 px-3 rounded-xl transition flex items-center justify-between';
+                activeFilter = btn.dataset.filter;
+                renderCalendarStream();
             });
         });
 
-        window.onload = function() {
-            renderCalendar();
-        };
+        // Toggle Panels
+        let isInfoVisible = false;
+        let isFilterVisible = false;
+        let isMouseVisible = false;
+
+        function syncStickyPanelsUI() {
+            const grid = document.getElementById('info-cards-grid');
+            const wrapper = document.getElementById('sticky-info-wrapper');
+            
+            const infoCard = document.getElementById('info-panel-card');
+            const filterCard = document.getElementById('filter-panel-card');
+            const mouseCard = document.getElementById('mouse-panel-card');
+
+            const infoLabel = document.getElementById('toggle-info-label');
+            const infoTrack = document.getElementById('toggle-info-track');
+            const infoThumb = document.getElementById('toggle-info-thumb');
+            const infoBtn = document.getElementById('toggle-info-btn');
+
+            const filterLabel = document.getElementById('toggle-filter-label');
+            const filterTrack = document.getElementById('toggle-filter-track');
+            const filterThumb = document.getElementById('toggle-filter-thumb');
+            const filterBtn = document.getElementById('toggle-filter-btn');
+
+            const mouseLabel = document.getElementById('toggle-mouse-label');
+            const mouseTrack = document.getElementById('toggle-mouse-track');
+            const mouseThumb = document.getElementById('toggle-mouse-thumb');
+            const mouseBtn = document.getElementById('toggle-mouse-btn');
+
+            infoBtn.setAttribute('aria-pressed', String(isInfoVisible));
+            filterBtn.setAttribute('aria-pressed', String(isFilterVisible));
+            mouseBtn.setAttribute('aria-pressed', String(isMouseVisible));
+
+            let visibleCount = (isInfoVisible ? 1 : 0) + (isFilterVisible ? 1 : 0) + (isMouseVisible ? 1 : 0);
+            if (visibleCount === 0) {
+                wrapper.classList.add('hidden');
+            } else {
+                wrapper.classList.remove('hidden');
+                grid.className = `grid grid-cols-1 ${visibleCount === 3 ? 'lg:grid-cols-3' : visibleCount === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-4`;
+            }
+
+            if (isInfoVisible) {
+                infoCard.classList.remove('hidden');
+                infoCard.classList.add('flex');
+                infoLabel.classList.remove('text-slate-400');
+                infoLabel.classList.add('text-fantasy-goldlight');
+                infoBtn.classList.remove('border-slate-700', 'via-fantasy-800');
+                infoBtn.classList.add('border-fantasy-gold/60', 'via-amber-950/50');
+                infoTrack.classList.remove('bg-slate-700', 'border-slate-600');
+                infoTrack.classList.add('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                infoThumb.classList.remove('translate-x-0');
+                infoThumb.classList.add('translate-x-5');
+            } else {
+                infoCard.classList.add('hidden');
+                infoCard.classList.remove('flex');
+                infoLabel.classList.remove('text-fantasy-goldlight');
+                infoLabel.classList.add('text-slate-400');
+                infoBtn.classList.remove('border-fantasy-gold/60', 'via-amber-950/50');
+                infoBtn.classList.add('border-slate-700', 'via-fantasy-800');
+                infoTrack.classList.remove('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                infoTrack.classList.add('bg-slate-700', 'border-slate-600');
+                infoThumb.classList.remove('translate-x-5');
+                infoThumb.classList.add('translate-x-0');
+            }
+
+            if (isFilterVisible) {
+                filterCard.classList.remove('hidden');
+                filterCard.classList.add('flex');
+                filterLabel.classList.remove('text-slate-400');
+                filterLabel.classList.add('text-fantasy-goldlight');
+                filterBtn.classList.remove('border-slate-700', 'via-fantasy-800');
+                filterBtn.classList.add('border-fantasy-gold/60', 'via-amber-950/50');
+                filterTrack.classList.remove('bg-slate-700', 'border-slate-600');
+                filterTrack.classList.add('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                filterThumb.classList.remove('translate-x-0');
+                filterThumb.classList.add('translate-x-5');
+            } else {
+                filterCard.classList.add('hidden');
+                filterCard.classList.remove('flex');
+                filterLabel.classList.remove('text-fantasy-goldlight');
+                filterLabel.classList.add('text-slate-400');
+                filterBtn.classList.remove('border-fantasy-gold/60', 'via-amber-950/50');
+                filterBtn.classList.add('border-slate-700', 'via-fantasy-800');
+                filterTrack.classList.remove('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                filterTrack.classList.add('bg-slate-700', 'border-slate-600');
+                filterThumb.classList.remove('translate-x-5');
+                filterThumb.classList.add('translate-x-0');
+            }
+
+            if (isMouseVisible) {
+                mouseCard.classList.remove('hidden');
+                mouseCard.classList.add('flex');
+                mouseLabel.classList.remove('text-slate-400');
+                mouseLabel.classList.add('text-fantasy-goldlight');
+                mouseBtn.classList.remove('border-slate-700', 'via-fantasy-800');
+                mouseBtn.classList.add('border-fantasy-gold/60', 'via-amber-950/50');
+                mouseTrack.classList.remove('bg-slate-700', 'border-slate-600');
+                mouseTrack.classList.add('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                mouseThumb.classList.remove('translate-x-0');
+                mouseThumb.classList.add('translate-x-5');
+            } else {
+                mouseCard.classList.add('hidden');
+                mouseCard.classList.remove('flex');
+                mouseLabel.classList.remove('text-fantasy-goldlight');
+                mouseLabel.classList.add('text-slate-400');
+                mouseBtn.classList.remove('border-fantasy-gold/60', 'via-amber-950/50');
+                mouseBtn.classList.add('border-slate-700', 'via-fantasy-800');
+                mouseTrack.classList.remove('bg-gradient-to-r', 'from-amber-600', 'to-fantasy-gold', 'border-fantasy-goldlight/60');
+                mouseTrack.classList.add('bg-slate-700', 'border-slate-600');
+                mouseThumb.classList.remove('translate-x-5');
+                mouseThumb.classList.add('translate-x-0');
+            }
+        }
+
+        document.getElementById('toggle-info-btn').addEventListener('click', () => {
+            isInfoVisible = !isInfoVisible;
+            syncStickyPanelsUI();
+        });
+
+        document.getElementById('toggle-filter-btn').addEventListener('click', () => {
+            isFilterVisible = !isFilterVisible;
+            syncStickyPanelsUI();
+        });
+
+        document.getElementById('toggle-mouse-btn').addEventListener('click', () => {
+            isMouseVisible = !isMouseVisible;
+            syncStickyPanelsUI();
+        });
+
+        function updateActiveYearHeader() {
+            const sections = document.querySelectorAll('.year-section:not(.hidden)');
+            const headerBottom = document.getElementById('main-header').getBoundingClientRect().bottom;
+            for (const sec of sections) {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= headerBottom + 180 && rect.bottom >= headerBottom) {
+                    const yr = parseInt(sec.dataset.year, 10);
+                    if (!isNaN(yr) && yr !== anchorYearNum) {
+                        anchorYearNum = yr;
+                        updateYearHeaderAndProgress();
+                    }
+                    break;
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            updateActiveYearHeader();
+            if (isLoadingMore) return;
+
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+
+            if (scrollTop + windowHeight >= docHeight - 250) {
+                isLoadingMore = true;
+                const lastYear = loadedYears[loadedYears.length - 1];
+                const next = getNextChronologicalYear(lastYear, currentEra);
+                if (next.era === currentEra && !loadedYears.includes(next.year)) {
+                    loadedYears.push(next.year);
+                    const stream = document.getElementById('calendar-stream');
+                    stream.appendChild(buildYearSectionElement(next.year, currentEra));
+                }
+                setTimeout(() => { isLoadingMore = false; }, 200);
+            }
+
+            if (scrollTop <= 15) {
+                const firstYear = loadedYears[0];
+                const prev = getPrevChronologicalYear(firstYear, currentEra);
+                if (prev.era === currentEra && !loadedYears.includes(prev.year)) {
+                    isLoadingMore = true;
+                    const oldScrollHeight = document.documentElement.scrollHeight;
+                    loadedYears.unshift(prev.year);
+                    const stream = document.getElementById('calendar-stream');
+                    stream.insertBefore(buildYearSectionElement(prev.year, currentEra), stream.firstChild);
+                    const newScrollHeight = document.documentElement.scrollHeight;
+                    window.scrollTo(0, scrollTop + (newScrollHeight - oldScrollHeight));
+                    setTimeout(() => { isLoadingMore = false; }, 250);
+                }
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setYearAndRender(610);
+            syncStickyPanelsUI();
+        });
     </script>
 </body>
 </html>
