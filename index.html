@@ -886,6 +886,53 @@
             }
 
             updateYearHeaderAndProgress();
+            ensureScrollableViewport();
+        }
+
+        function appendNextYear() {
+            const lastYear = loadedYears[loadedYears.length - 1];
+            const next = getNextChronologicalYear(lastYear, currentEra);
+            if (next.era === currentEra && !loadedYears.includes(next.year)) {
+                loadedYears.push(next.year);
+                const stream = document.getElementById('calendar-stream');
+                const sectionEl = buildYearSectionElement(next.year, currentEra);
+                stream.appendChild(sectionEl);
+                if (!sectionEl.classList.contains('hidden')) {
+                    document.getElementById('empty-filter-message').classList.add('hidden');
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function prependPrevYear() {
+            const firstYear = loadedYears[0];
+            const prev = getPrevChronologicalYear(firstYear, currentEra);
+            if (prev.era === currentEra && !loadedYears.includes(prev.year)) {
+                const scrollTop = window.scrollY;
+                const oldScrollHeight = document.documentElement.scrollHeight;
+                loadedYears.unshift(prev.year);
+                const stream = document.getElementById('calendar-stream');
+                const sectionEl = buildYearSectionElement(prev.year, currentEra);
+                stream.insertBefore(sectionEl, stream.firstChild);
+                if (!sectionEl.classList.contains('hidden')) {
+                    document.getElementById('empty-filter-message').classList.add('hidden');
+                }
+                const newScrollHeight = document.documentElement.scrollHeight;
+                window.scrollTo(0, scrollTop + (newScrollHeight - oldScrollHeight));
+                return true;
+            }
+            return false;
+        }
+
+        // Ensure desktop viewports always have enough content to scroll even with sparse filters (like Syzygie)
+        function ensureScrollableViewport() {
+            let safetyCounter = 0;
+            while (document.documentElement.scrollHeight <= window.innerHeight + 300 && safetyCounter < 120) {
+                const added = appendNextYear();
+                if (!added) break;
+                safetyCounter++;
+            }
         }
 
         function setYearAndRender(yearNum) {
@@ -1328,31 +1375,52 @@
 
             if (scrollTop + windowHeight >= docHeight - 250) {
                 isLoadingMore = true;
-                const lastYear = loadedYears[loadedYears.length - 1];
-                const next = getNextChronologicalYear(lastYear, currentEra);
-                if (next.era === currentEra && !loadedYears.includes(next.year)) {
-                    loadedYears.push(next.year);
-                    const stream = document.getElementById('calendar-stream');
-                    stream.appendChild(buildYearSectionElement(next.year, currentEra));
+                let steps = 0;
+                while (steps < 60 && appendNextYear()) {
+                    steps++;
+                    if (document.documentElement.scrollHeight > docHeight + 100) break;
                 }
-                setTimeout(() => { isLoadingMore = false; }, 200);
+                setTimeout(() => { isLoadingMore = false; }, 150);
             }
 
             if (scrollTop <= 15) {
-                const firstYear = loadedYears[0];
-                const prev = getPrevChronologicalYear(firstYear, currentEra);
-                if (prev.era === currentEra && !loadedYears.includes(prev.year)) {
-                    isLoadingMore = true;
-                    const oldScrollHeight = document.documentElement.scrollHeight;
-                    loadedYears.unshift(prev.year);
-                    const stream = document.getElementById('calendar-stream');
-                    stream.insertBefore(buildYearSectionElement(prev.year, currentEra), stream.firstChild);
-                    const newScrollHeight = document.documentElement.scrollHeight;
-                    window.scrollTo(0, scrollTop + (newScrollHeight - oldScrollHeight));
-                    setTimeout(() => { isLoadingMore = false; }, 250);
+                isLoadingMore = true;
+                const oldHeight = document.documentElement.scrollHeight;
+                let steps = 0;
+                while (steps < 60 && prependPrevYear()) {
+                    steps++;
+                    if (document.documentElement.scrollHeight > oldHeight + 100) break;
                 }
+                setTimeout(() => { isLoadingMore = false; }, 200);
             }
         });
+
+        // Allow mouse wheel scrolling to load next/previous years even when page has no scrollbar yet
+        window.addEventListener('wheel', (e) => {
+            if (isLoadingMore) return;
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+
+            if (e.deltaY > 0 && scrollTop + windowHeight >= docHeight - 50) {
+                isLoadingMore = true;
+                let steps = 0;
+                while (steps < 60 && appendNextYear()) {
+                    steps++;
+                    if (document.documentElement.scrollHeight > docHeight + 50) break;
+                }
+                setTimeout(() => { isLoadingMore = false; }, 150);
+            } else if (e.deltaY < 0 && scrollTop <= 5) {
+                isLoadingMore = true;
+                const oldHeight = document.documentElement.scrollHeight;
+                let steps = 0;
+                while (steps < 60 && prependPrevYear()) {
+                    steps++;
+                    if (document.documentElement.scrollHeight > oldHeight + 50) break;
+                }
+                setTimeout(() => { isLoadingMore = false; }, 200);
+            }
+        }, { passive: true });
 
         window.addEventListener('DOMContentLoaded', () => {
             setYearAndRender(610);
